@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/view/command/my_app.dart';
+// import 'package:flutter_chat/view/command/my_app.dart';
 import 'firebase_options.dart';
-
+// https://console.firebase.google.com/project/flutterchat-e5565/overview
+// import 'package:clay_containers/clay_containers.dart';
+// import 'package:get/get.dart';
 Future<void> main()
 async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,10 +13,28 @@ async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
-}
-// import 'package:clay_containers/clay_containers.dart';
-// import 'package:get/get.dart';
   // runApp(const MyChatApp());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//todo close
 // class MyChatApp extends StatelessWidget {
 //   const MyChatApp({super.key});
 //
@@ -37,7 +58,7 @@ async {
 // class _HomePageState extends State<HomePage> {
 //   @override
 //   Widget build(BuildContext context) {
-//     Color baseColor = Color(0xFFF2F2F2);
+//     Color baseColor = const Color(0xFFF2F2F2);
 //     return Scaffold(
 //       body: Container(
 //         color: baseColor,
@@ -53,7 +74,7 @@ async {
 //                 surfaceColor: Colors.blue.shade50,
 //                 curveType: CurveType.concave,
 //                 depth: 5,
-//                 child: Padding(
+//                 child: const Padding(
 //                   padding: EdgeInsets.all(20),
 //                   child: Center(child: ClayText("Seize the Clay!", emboss: true, size: 25)),
 //                 ),
@@ -62,7 +83,7 @@ async {
 //                 color: baseColor,
 //                 height: 150,
 //                 width: 150,
-//                 customBorderRadius: BorderRadius.only(
+//                 customBorderRadius: const BorderRadius.only(
 //                     topRight: Radius.elliptical(150, 150),
 //                     bottomLeft: Radius.circular(50)),
 //               ),
@@ -73,7 +94,7 @@ async {
 //     );
 //   }
 // }
-
+//todo close
 
 
 // class HomePage extends StatefulWidget {
@@ -82,11 +103,11 @@ async {
 //   @override
 //   State<HomePage> createState() => _HomePageState();
 // }
-
-
-
+//
+//
+//
 // class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-//   Color baseColor = const Color(0xFFf2f2f2);
+//   Color baseColor = Colors.purple.shade100;
 //   double firstDepth = 50;
 //   double secondDepth = 50;
 //   double thirdDepth = 50;
@@ -130,46 +151,37 @@ async {
 //     final calculatedFourthDepth =
 //     stagger(fourthDepth, _animationController.value, 1)!;
 //     return Scaffold(
-//       body: ClayTheme(
-//         themeData: const ClayThemeData(
-//           height: 10,
-//           width: 20,
-//           borderRadius: 360,
-//           textTheme: ClayTextTheme(style: TextStyle()),
-//           depth: 12,
-//         ),
-//         child: ColoredBox(
-//           color: baseColor,
-//           child: Center(
-//             child: ClayContainer(
-//               color: baseColor,
-//               height: 240,
-//               width: 240,
-//               curveType: CurveType.concave,
-//               spread: 30,
-//               depth: calculatedFirstDepth.toInt(),
-//               child: Center(
-//                 child: ClayContainer(
-//                   height: 200,
-//                   width: 200,
-//                   depth: calculatedSecondDepth.toInt(),
-//                   curveType: CurveType.convex,
-//                   color: baseColor,
-//                   child: Center(
-//                     child: ClayContainer(
-//                       height: 160,
-//                       width: 160,
-//                       color: baseColor,
-//                       depth: calculatedThirdDepth.toInt(),
-//                       curveType: CurveType.concave,
-//                       child: Center(
-//                         child: ClayContainer(
-//                           height: 120,
-//                           width: 120,
-//                           color: baseColor,
-//                           depth: calculatedFourthDepth.toInt(),
-//                           curveType: CurveType.convex,
-//                         ),
+//       body: ColoredBox(
+//         color: baseColor,
+//         child: Center(
+//           child: ClayContainer(
+//             color: baseColor,
+//             height: 240,
+//             width: 240,
+//             curveType: CurveType.concave,
+//             spread: 30,
+//             depth: calculatedFirstDepth.toInt(),
+//             child: Center(
+//               child: ClayContainer(
+//                 height: 200,
+//                 width: 200,
+//                 depth: calculatedSecondDepth.toInt(),
+//                 curveType: CurveType.convex,
+//                 color: baseColor,
+//                 child: Center(
+//                   child: ClayContainer(
+//                     height: 160,
+//                     width: 160,
+//                     color: baseColor,
+//                     depth: calculatedThirdDepth.toInt(),
+//                     curveType: CurveType.concave,
+//                     child: Center(
+//                       child: ClayContainer(
+//                         height: 120,
+//                         width: 120,
+//                         color: baseColor,
+//                         depth: calculatedFourthDepth.toInt(),
+//                         curveType: CurveType.convex,
 //                       ),
 //                     ),
 //                   ),
