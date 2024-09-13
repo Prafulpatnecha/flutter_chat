@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController
 {
@@ -7,11 +10,17 @@ class AuthController extends GetxController
   RxBool loginSignUp=true.obs;
   RxBool themeBool=false.obs;
   RxBool loginColor=true.obs;
+  //todo firebase Store work
   TextEditingController textEmail = TextEditingController();
   TextEditingController textPassword = TextEditingController();
   TextEditingController textUserName = TextEditingController();
   TextEditingController textPhoneNo = TextEditingController();
   TextEditingController textConfirmPassword = TextEditingController();
+  Rx<File>? imagePath;
+  void updateObs()
+  {
+    update();
+  }
 }
 //Todo links Pub
 // https://pub.dev/packages/neumorphic_ui
