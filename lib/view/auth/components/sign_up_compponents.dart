@@ -38,6 +38,8 @@ Align signUpAlign(double height, double width, AuthController authController) {
               child: GestureDetector(
                 onTap: () {
                   authController.loginSignUp.value = true;
+                  authController.textPassword.clear();
+                  authController.textEmail.clear();
                 },
                 child: Row(
                   children: [
@@ -98,18 +100,48 @@ Align signUpAlign(double height, double width, AuthController authController) {
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-              child: yourTextFormField(
-                  textController: authController.textPassword,
-                  hintTextFind: "Enter Your Password",
-                  textInputAction: TextInputAction.next),
+              child: passwordTextFormField(
+                textController: authController.textPassword,
+                hintTextFind: "Enter Your Password",
+                textInputAction: TextInputAction.next,
+                iconButton: IconButton(
+                  onPressed: () {
+                    authController.passwordHide.value =
+                        !authController.passwordHide.value;
+                  },
+                  icon: (authController.passwordHide.value == true)
+                      ? Icon(
+                          Icons.remove_red_eye,
+                          color: Colors.amber,
+                        )
+                      : Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Colors.amber,
+                        ),
+                ),
+              ),
             ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-              child: yourTextFormField(
+              child: passwordTextFormField(
                   textController: authController.textConfirmPassword,
                   hintTextFind: "Enter Your Confirm Password",
-                  textInputAction: TextInputAction.none),
+                  textInputAction: TextInputAction.none,
+                  iconButton: IconButton(
+                      onPressed: () {
+                        authController.passwordHide.value =
+                            !authController.passwordHide.value;
+                      },
+                      icon: (authController.passwordHide.value == true)
+                          ? Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.amber,
+                            )
+                          : Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: Colors.amber,
+                            ))),
             ),
             SizedBox(
               height: height * 0.04,
@@ -121,38 +153,44 @@ Align signUpAlign(double height, double width, AuthController authController) {
                   builder: (controller) => GestureDetector(
                     onTap: () async {
                       //Todo Image Picker Code The Place!
-                      ImagePicker imagePicker =ImagePicker();
-                      XFile? xFile = await imagePicker.pickImage(source: ImageSource.gallery);
-                      authController.imagePath= File(xFile!.path).obs;
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? xFile = await imagePicker.pickImage(
+                          source: ImageSource.gallery);
+                      authController.imagePath = File(xFile!.path).obs;
                       authController.updateObs();
                     },
-                    child: (authController.imagePath==null)?ClayContainer(
-                      height: 50,
-                      width: 50,
-                      depth: -20,
-                      curveType: CurveType.concave,
-                      borderRadius: 10,
-                      color: Colors.amberAccent.shade100,
-                      child: Icon(
-                        Bootstrap.person_add,
-                        size: 30,
-                      ),
-                    ):ClayContainer(
-                      height: 50,
-                      width: 50,
-                      depth: -20,
-                      curveType: CurveType.concave,
-                      borderRadius: 10,
-                      color: Colors.amberAccent.shade100,
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                            image: DecorationImage(image: FileImage(File(authController.imagePath!.value.path)),fit: BoxFit.cover),
+                    child: (authController.imagePath == null)
+                        ? ClayContainer(
+                            height: 50,
+                            width: 50,
+                            depth: -20,
+                            curveType: CurveType.concave,
+                            borderRadius: 10,
+                            color: Colors.amberAccent.shade100,
+                            child: Icon(
+                              Bootstrap.person_add,
+                              size: 30,
                             ),
-                        ),
-                    ),
+                          )
+                        : ClayContainer(
+                            height: 50,
+                            width: 50,
+                            depth: -20,
+                            curveType: CurveType.concave,
+                            borderRadius: 10,
+                            color: Colors.amberAccent.shade100,
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    image: FileImage(File(
+                                        authController.imagePath!.value.path)),
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          ),
                   ),
                 ),
                 GestureDetector(
@@ -167,7 +205,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
                     }
                   },
                   child: Brand(
-                    Brands.google,
+                    Brands.google,//TODO Icon
                     size: 30,
                   ),
                 ),
@@ -178,29 +216,36 @@ Align signUpAlign(double height, double width, AuthController authController) {
                   onPanEnd: (details) async {
                     authController.loginColor.value = true;
                     //todo Enter SignUp Button To On Here
-                    if(authController.textPassword.text==authController.textConfirmPassword.text)
-                      {
-                        try {
-                          await AuthServices.authServices.createSignUp(
-                              authController.textEmail.text,
-                              authController.textPassword.text);
-                          UserModal userModel=UserModal(name: authController.textUserName.text, email: authController.textEmail.text, phoneNo: authController.textPhoneNo.text, token: "", image: authController.imagePath==null? "https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE=": authController.imagePath!.value.path);
-                          FirebaseCloudServices.firebaseCloudServices.insertUserIntoFireStore(userModel);
-                          Get.offAndToNamed('/');
-                          authController.imagePath = null;
-                          authController.textPhoneNo.clear();
-                          authController.textEmail.clear();
-                          authController.textConfirmPassword.clear();
-                          authController.textPassword.clear();
-                          authController.textUserName.clear();
-                        } catch (e) {
-                          Get.snackbar("Email Check",
-                              "Please Check Your Email And Password Try Again!!");
-                        }
-
+                    if (authController.textPassword.text ==
+                        authController.textConfirmPassword.text) {
+                      try {
+                        await AuthServices.authServices.createSignUp(
+                            authController.textEmail.text,
+                            authController.textPassword.text);
+                        UserModal userModel = UserModal(
+                            name: authController.textUserName.text,
+                            email: authController.textEmail.text,
+                            phoneNo: authController.textPhoneNo.text,
+                            token: "",
+                            image: authController.imagePath == null
+                                ? "https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE="
+                                : authController.imagePath!.value.path);
+                        FirebaseCloudServices.firebaseCloudServices
+                            .insertUserIntoFireStore(userModel);
+                        Get.offAndToNamed('/');
+                        authController.imagePath = null;
+                        authController.textPhoneNo.clear();
+                        authController.textEmail.clear();
+                        authController.textConfirmPassword.clear();
+                        authController.textPassword.clear();
+                        authController.textUserName.clear();
+                      } catch (e) {
+                        Get.snackbar("Email Check",
+                            "Please Check Your Email And Password Try Again!!");
                       }
-                    else{
-                      Get.snackbar("Password Check", "Entered Password Failed!!");
+                    } else {
+                      Get.snackbar(
+                          "Password Check", "Entered Password Failed!!");
                     }
                     // User? user = AuthServices.authServices.getCurrentUser();
                     // if(authController.textEmail.text!=user!.email.toString())
@@ -240,6 +285,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
                 ),
               ],
             ),
+            SizedBox(height: 10,)
           ],
         ),
       ),

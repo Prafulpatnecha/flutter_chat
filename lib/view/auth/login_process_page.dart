@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:clay_containers/clay_containers.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter_chat/controller/auth_controller.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -43,9 +44,13 @@ class LoginProcessPage extends StatelessWidget {
                       random: random);
                 },
               ),
-              authController.loginSignUp.value
-                  ? signInAlign(height, width, authController)
-                  : signUpAlign(height, width, authController),
+              FlipCard(
+                // onFlipDone: (isFront) {
+                //   isFront=!isFront;
+                // },
+                front: signInAlign(height, width, authController),
+                back: signUpAlign(height, width, authController),
+              )
             ],
           ),
         ),

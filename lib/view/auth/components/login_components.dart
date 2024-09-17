@@ -59,6 +59,8 @@ Align signInAlign(double height, double width, AuthController authController) {
                 child: GestureDetector(
                   onTap: () {
                     authController.loginSignUp.value = false;
+                    authController.textPassword.clear();
+                    authController.textEmail.clear();
                   },
                   child: Row(
                     children: [
@@ -101,10 +103,24 @@ Align signInAlign(double height, double width, AuthController authController) {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                child: yourTextFormField(
-                    textController: authController.textPassword,
-                    hintTextFind: "Enter Your Password",
-                    textInputAction: TextInputAction.none),
+                child: passwordTextFormField(
+                  textController: authController.textPassword,
+                  hintTextFind: "Enter Your Password",
+                  textInputAction: TextInputAction.none,
+                  iconButton: IconButton(
+                      onPressed: () {
+                        authController.passwordHideMethod();
+                      },
+                      icon: (authController.passwordHide.value == true)
+                          ? const Icon(
+                              Icons.remove_red_eye,
+                              color: Colors.amber,
+                            )
+                          : const Icon(
+                              Icons.remove_red_eye_outlined,
+                              color: Colors.amber,
+                            )),
+                ),
               ),
               SizedBox(
                 height: height * 0.04,
@@ -173,6 +189,7 @@ Align signInAlign(double height, double width, AuthController authController) {
                   ),
                 ],
               ),
+              const SizedBox(height: 10,)
             ],
           ),
         ),

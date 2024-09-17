@@ -10,6 +10,17 @@ class AuthController extends GetxController
   RxBool loginSignUp=true.obs;
   RxBool themeBool=false.obs;
   RxBool loginColor=true.obs;
+  RxBool passwordHide = true.obs;
+
+  void passwordHideMethod()
+  {
+    if(passwordHide.value==true)
+      {
+        passwordHide.value = false;
+      }else{
+        passwordHide.value = true;
+    }
+  }
   //todo firebase Store work
   TextEditingController textEmail = TextEditingController();
   TextEditingController textPassword = TextEditingController();
