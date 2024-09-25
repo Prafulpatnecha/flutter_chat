@@ -3,12 +3,10 @@ import 'dart:math';
 import 'package:clay_containers/constants.dart';
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_chat/services/auth_services.dart';
 import 'package:flutter_chat/services/google_auth_services.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../../controller/auth_controller.dart';

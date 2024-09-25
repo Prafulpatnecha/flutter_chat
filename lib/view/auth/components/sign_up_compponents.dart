@@ -3,14 +3,13 @@ import 'dart:io';
 import 'package:clay_containers/constants.dart';
 import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';
+import 'package:flutter_chat/services/cloud_storage_firebase_save_any_files.dart';
 import 'package:flutter_chat/services/firebase_cloud_services.dart';
 import 'package:flutter_chat/services/google_auth_services.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -110,11 +109,11 @@ Align signUpAlign(double height, double width, AuthController authController) {
                         !authController.passwordHide.value;
                   },
                   icon: (authController.passwordHide.value == true)
-                      ? Icon(
+                      ? const Icon(
                           Icons.remove_red_eye,
                           color: Colors.amber,
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.remove_red_eye_outlined,
                           color: Colors.amber,
                         ),
@@ -134,11 +133,11 @@ Align signUpAlign(double height, double width, AuthController authController) {
                             !authController.passwordHide.value;
                       },
                       icon: (authController.passwordHide.value == true)
-                          ? Icon(
+                          ? const Icon(
                               Icons.remove_red_eye,
                               color: Colors.amber,
                             )
-                          : Icon(
+                          : const Icon(
                               Icons.remove_red_eye_outlined,
                               color: Colors.amber,
                             ))),
@@ -152,12 +151,23 @@ Align signUpAlign(double height, double width, AuthController authController) {
                 GetBuilder<AuthController>(
                   builder: (controller) => GestureDetector(
                     onTap: () async {
+
                       //Todo Image Picker Code The Place!
                       ImagePicker imagePicker = ImagePicker();
                       XFile? xFile = await imagePicker.pickImage(
                           source: ImageSource.gallery);
-                      authController.imagePath = File(xFile!.path).obs;
-                      authController.updateObs();
+                      // // print("object");
+                      authController.imagePath = File(xFile!.path).obs; //todo image file to save then work but not long time using firebase only this file path save...
+                      CloudStorageFirebaseSaveAnyFiles.cloudStorageFirebaseSaveAnyFiles.imageStorageIntoEmail(authController.imagePath!.value);
+                      //
+                      // Directory imageDirectory= await getApplicationDocumentsDirectory();
+                      // authController.imageString.value = "${imageDirectory.absolute}/profileImage.png";
+                      // print(authController.imagePath!.value.toString());
+
+
+
+                      authController
+                          .updateObs(); //any update work then button click...
                     },
                     child: (authController.imagePath == null)
                         ? ClayContainer(
@@ -167,7 +177,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
                             curveType: CurveType.concave,
                             borderRadius: 10,
                             color: Colors.amberAccent.shade100,
-                            child: Icon(
+                            child: const Icon(
                               Bootstrap.person_add,
                               size: 30,
                             ),
@@ -205,7 +215,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
                     }
                   },
                   child: Brand(
-                    Brands.google,//TODO Icon
+                    Brands.google, //TODO Icon
                     size: 30,
                   ),
                 ),
@@ -285,7 +295,9 @@ Align signUpAlign(double height, double width, AuthController authController) {
                 ),
               ],
             ),
-            SizedBox(height: 10,)
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),
