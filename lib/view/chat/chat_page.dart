@@ -53,7 +53,7 @@ class ChatPage extends StatelessWidget {
                   return Container(
                     height: 100,
                     width: width,
-                    color: Colors.white.withOpacity(0.2),
+                    color: appBarColor,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8.0,
@@ -149,732 +149,783 @@ class ChatPage extends StatelessWidget {
                               AuthServices.authServices.getCurrentUser()!.email)
                           ? (chatList[index].deleteReceiver == true)
                               ? Container()
-                              : (chatList[index].delete==true)? Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onLongPress: () {
-                              showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: sheetColor,
-                                        borderRadius:
-                                        const BorderRadius.only(
-                                            topLeft:
-                                            Radius.circular(
-                                                30),
-                                            topRight:
-                                            Radius.circular(
-                                                30))),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
+                              : (chatList[index].delete == true)
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
+                                        const SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                        ),
                                         GestureDetector(
-                                          onTap: () {
-                                            print("Delete Receiver");
-                                            //Todo Delete Receiver
-                                            Get.back();
-                                            showDialog(
+                                          onLongPress: () {
+                                            showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
                                               context: context,
                                               builder: (context) {
-                                                return CupertinoAlertDialog(
-                                                  title: Text(
-                                                    "Delete Conformation",
-                                                  ),
-                                                  content: const Text(
-                                                      "Delete message Have you confirmed!!"),
-                                                  actions: [
-                                                    TextButton(
-                                                        onPressed:
-                                                            () async {
-                                                          String
-                                                          dcId =
-                                                          docIdList[
-                                                          index];
-                                                          await FirebaseCloudServices
-                                                              .firebaseCloudServices
-                                                              .deleteChatReceiver(
-                                                              chatController.receiverEmail.value,
-                                                              true,
-                                                              dcId);
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                      color: sheetColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                              topLeft: Radius
+                                                                  .circular(30),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      30))),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          print(
+                                                              "Delete Receiver");
+                                                          //Todo Delete Receiver
                                                           Get.back();
-                                                        },
-                                                        child: Text(
-                                                            "Yes")),
-                                                    TextButton(
-                                                        onPressed:
-                                                            () {
-                                                          Get.back();
-                                                        },
-                                                        child: Text(
-                                                            "No")),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          },
-                                          child: Container(
-                                            width: width,
-                                            alignment:
-                                            Alignment.center,
-                                            color: Colors.transparent,
-                                            child: Center(
-                                              child: Container(
-                                                padding:
-                                                const EdgeInsets
-                                                    .all(8.0),
-                                                margin:
-                                                const EdgeInsets
-                                                    .all(15),
-                                                child: Text(
-                                                  "Delete",
-                                                  style: TextStyle(
-                                                      color:
-                                                      textChanderColor,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .bold,
-                                                      fontSize: 20),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(5),
-                              width:
-                              (chatList[index].message!.length <=
-                                  34)
-                                  ? null
-                                  : width * 0.8,
-                              decoration: BoxDecoration(
-                                color: chatReadColor,
-                                borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  "You deleted this message",
-                                  style: TextStyle(
-                                      fontSize: 17, color: textColor),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ) :Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 10,
-                                      width: 10,
-                                    ),
-                                    GestureDetector(
-                                      onLongPress: () {
-                                        showModalBottomSheet(
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                  color: sheetColor,
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  30),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  30))),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      print("Delete Receiver");
-                                                      //Todo Delete Receiver
-                                                      Get.back();
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return CupertinoAlertDialog(
-                                                            title: Text(
-                                                              "Delete Conformation",
-                                                            ),
-                                                            content: const Text(
-                                                                "Delete message Have you confirmed!!"),
-                                                            actions: [
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    String
-                                                                        dcId =
-                                                                        docIdList[
-                                                                            index];
-                                                                    await FirebaseCloudServices
-                                                                        .firebaseCloudServices
-                                                                        .deleteChatReceiver(
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return CupertinoAlertDialog(
+                                                                title: Text(
+                                                                  "Delete Conformation",
+                                                                ),
+                                                                content: const Text(
+                                                                    "Delete message Have you confirmed!!"),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Get.back();
+                                                                      },
+                                                                      child: Text(
+                                                                          "No")),
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        Get.back();
+                                                                        String
+                                                                            dcId =
+                                                                            docIdList[index];
+                                                                        await FirebaseCloudServices.firebaseCloudServices.deleteChatReceiver(
                                                                             chatController.receiverEmail.value,
                                                                             true,
                                                                             dcId);
-                                                                    Get.back();
-                                                                  },
-                                                                  child: Text(
-                                                                      "Yes")),
-                                                              TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    Get.back();
-                                                                  },
-                                                                  child: Text(
-                                                                      "No")),
-                                                            ],
+                                                                      },
+                                                                      child: Text(
+                                                                          "Yes")),
+
+                                                                ],
+                                                              );
+                                                            },
                                                           );
                                                         },
-                                                      );
-                                                    },
-                                                    child: Container(
-                                                      width: width,
-                                                      alignment:
-                                                          Alignment.center,
-                                                      color: Colors.transparent,
-                                                      child: Center(
                                                         child: Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(15),
-                                                          child: Text(
-                                                            "Delete",
-                                                            style: TextStyle(
-                                                                color:
-                                                                    textChanderColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20),
+                                                          width: width,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: Center(
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(15),
+                                                              child: Text(
+                                                                "Delete",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        textChanderColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.all(5),
-                                        width:
-                                            (chatList[index].message!.length <=
-                                                    34)
-                                                ? null
-                                                : width * 0.8,
-                                        decoration: BoxDecoration(
-                                          color: chatReadColor,
-                                          borderRadius: const BorderRadius.only(
-                                              bottomRight: Radius.circular(10),
-                                              bottomLeft: Radius.circular(10),
-                                              topRight: Radius.circular(10)),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Text(
-                                            chatList[index].message!,
-                                            style: TextStyle(
-                                                fontSize: 17, color: textColor),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 50,
-                                    ),
-                                  ],
-                                )
-                          : (chatList[index].delete==true && chatList[index].deleteSender)?Container():(chatList[index].delete==true)? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onLongPress: () {
-                              showModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: sheetColor,
-                                        borderRadius:
-                                        const BorderRadius.only(
-                                            topLeft:
-                                            Radius.circular(
-                                                30),
-                                            topRight:
-                                            Radius.circular(
-                                                30))),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            print("Delete Receiver");
-                                            //Todo Delete Receiver
-                                            Get.back();
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return CupertinoAlertDialog(
-                                                  title: Text(
-                                                    "Delete Conformation",
-                                                  ),
-                                                  content: const Text(
-                                                      "Delete message Have you confirmed!!"),
-                                                  actions: [
-                                                    TextButton(
-                                                        onPressed:
-                                                            () async {
-                                                          String
-                                                          dcId =
-                                                          docIdList[
-                                                          index];
-                                                          await FirebaseCloudServices
-                                                              .firebaseCloudServices
-                                                              .deleteChatSenderMe(
-                                                              chatController.receiverEmail.value,
-                                                              true,
-                                                              dcId);
-                                                          Get.back();
-                                                        },
-                                                        child: Text(
-                                                            "Yes")),
-                                                    TextButton(
-                                                        onPressed:
-                                                            () {
-                                                          Get.back();
-                                                        },
-                                                        child: Text(
-                                                            "No")),
-                                                  ],
                                                 );
                                               },
                                             );
                                           },
                                           child: Container(
-                                            width: width,
-                                            alignment:
-                                            Alignment.center,
-                                            color: Colors.transparent,
-                                            child: Center(
-                                              child: Container(
-                                                padding:
-                                                const EdgeInsets
-                                                    .all(8.0),
-                                                margin:
-                                                const EdgeInsets
-                                                    .all(15),
-                                                child: Text(
-                                                  "Delete",
-                                                  style: TextStyle(
-                                                      color:
-                                                      textChanderColor,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .bold,
-                                                      fontSize: 20),
-                                                ),
+                                            margin: const EdgeInsets.all(5),
+                                            width: (chatList[index]
+                                                        .message!
+                                                        .length <=
+                                                    34)
+                                                ? null
+                                                : width * 0.8,
+                                            decoration: BoxDecoration(
+                                              color: chatReadColor,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(10),
+                                                      bottomLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10)),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(
+                                                "You deleted this message",
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: textColor),
                                               ),
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          height: 50,
+                                        ),
                                       ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.all(5),
-                              width:
-                              (chatList[index].message!.length <=
-                                  34)
-                                  ? null
-                                  : width * 0.8,
-                              decoration: BoxDecoration(
-                                color: chatReadColorCurrentUser,
-                                borderRadius: const BorderRadius.only(
-                                    bottomRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    topLeft: Radius.circular(10)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  "You deleted this message",
-                                  style: TextStyle(
-                                      fontSize: 17, color: textColor),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 50,
-                            width: 10,
-                          ),
-                        ],
-                      ):(chatList[index].deleteSender==true)? Container():Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                  width: 10,
-                                ),
-                                GestureDetector(
-                                  onLongPress: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                              color: sheetColor,
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(30),
-                                                      topRight:
-                                                          Radius.circular(30))),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Center(
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    print("Update");
-                                                    Navigator.of(context).pop();
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        TextEditingController
-                                                            textUpdate =
-                                                            TextEditingController(
-                                                                text: chatList[
-                                                                        index]
-                                                                    .message);
-                                                        return AlertDialog(
-                                                          backgroundColor:
-                                                              sheetColor,
-                                                          title: Center(
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onLongPress: () {
+                                            showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                      color: sheetColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                              topLeft: Radius
+                                                                  .circular(30),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      30))),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          print(
+                                                              "Delete Receiver");
+                                                          //Todo Delete Receiver
+                                                          Get.back();
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return CupertinoAlertDialog(
+                                                                title: Text(
+                                                                  "Delete Conformation",
+                                                                ),
+                                                                content: const Text(
+                                                                    "Delete message Have you confirmed!!"),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Get.back();
+                                                                      },
+                                                                      child: Text(
+                                                                          "No")),
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        Get.back();
+                                                                        String
+                                                                            dcId =
+                                                                            docIdList[index];
+                                                                        await FirebaseCloudServices.firebaseCloudServices.deleteChatReceiver(
+                                                                            chatController.receiverEmail.value,
+                                                                            true,
+                                                                            dcId);
+                                                                      },
+                                                                      child: Text(
+                                                                          "Yes")),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          width: width,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: Center(
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(15),
                                                               child: Text(
-                                                            "Update",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  textChanderColor,
-                                                            ),
-                                                          )),
-                                                          content: TextField(
-                                                            controller:
-                                                                textUpdate,
-                                                            decoration:
-                                                                const InputDecoration(
-                                                              border:
-                                                                  OutlineInputBorder(),
-                                                            ),
-                                                          ),
-                                                          actions: [
-                                                            TextButton(
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                                child: Text(
-                                                                  "Exit",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          textChanderColor),
-                                                                )),
-                                                            TextButton(
-                                                              onPressed:
-                                                                  () async {
-                                                                //todo confirmation for update text....
-                                                                String dcId =
-                                                                    docIdList[
-                                                                        index];
-                                                                await FirebaseCloudServices
-                                                                    .firebaseCloudServices
-                                                                    .updateChat(
-                                                                        chatController
-                                                                            .receiverEmail
-                                                                            .value,
-                                                                        textUpdate
-                                                                            .text,
-                                                                        dcId);
-                                                                Get.back();
-                                                              },
-                                                              child: Text(
-                                                                "Confirm",
+                                                                "Delete",
                                                                 style: TextStyle(
                                                                     color:
-                                                                        textChanderColor),
+                                                                        textChanderColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20),
                                                               ),
                                                             ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    width: width,
-                                                    alignment: Alignment.center,
-                                                    color: Colors.transparent,
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    margin:
-                                                        const EdgeInsets.all(
-                                                            15),
-                                                    child: Text(
-                                                      "Update",
-                                                      style: TextStyle(
-                                                          color:
-                                                              textChanderColor,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10),
-                                                child: DottedLine(
-                                                  direction: Axis.horizontal,
-                                                  alignment:
-                                                      WrapAlignment.center,
-                                                  lineLength: double.infinity,
-                                                  lineThickness: 2,
-                                                  dashLength: 2.0,
-                                                  dashColor: textColor,
-                                                  dashGradient:
-                                                      dividerColorList,
-                                                  dashRadius: 0.0,
-                                                  dashGapRadius: 20,
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  print("Delete");
-                                                  Get.back();
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        backgroundColor:
-                                                            sheetColor,
-                                                        content: Text(
-                                                          "Delete Message?",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  textSheetDeleteColor),
+                                                          ),
                                                         ),
-                                                        actions: [
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                // mainAxisSize: MainAxisSize.min,
-                                                                children: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      String
-                                                                          dcId =
-                                                                          docIdList[
-                                                                              index];
-                                                                      await FirebaseCloudServices.firebaseCloudServices.deleteChatSenderAlso(
-                                                                          chatController
-                                                                              .receiverEmail
-                                                                              .value,
-                                                                          true,
-                                                                          dcId);
-                                                                      Get.back();
-                                                                    },
-                                                                    child: Text(
-                                                                        "Delete For Everyone",
-                                                                        textAlign:
-                                                                            TextAlign
-                                                                                .end,
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                textButtonColor,
-                                                                            fontWeight:
-                                                                                FontWeight.bold)),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                // mainAxisSize: MainAxisSize.min,
-                                                                children: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      String
-                                                                          dcId =
-                                                                          docIdList[
-                                                                              index];
-                                                                      await FirebaseCloudServices.firebaseCloudServices.deleteChatSenderMe(
-                                                                          chatController
-                                                                              .receiverEmail
-                                                                              .value,
-                                                                          true,
-                                                                          dcId);
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.all(5),
+                                            width: (chatList[index]
+                                                        .message!
+                                                        .length <=
+                                                    34)
+                                                ? null
+                                                : width * 0.8,
+                                            decoration: BoxDecoration(
+                                              color: chatReadColor,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(10),
+                                                      bottomLeft:
+                                                          Radius.circular(10),
+                                                      topRight:
+                                                          Radius.circular(10)),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(
+                                                chatList[index].message!,
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: textColor),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 50,
+                                        ),
+                                      ],
+                                    )
+                          : (chatList[index].delete == true &&
+                                  chatList[index].deleteSender)
+                              ? Container()
+                              : (chatList[index].delete == true)
+                                  ? Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        const SizedBox(
+                                          height: 10,
+                                          width: 10,
+                                        ),
+                                        GestureDetector(
+                                          onLongPress: () {
+                                            showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  decoration: BoxDecoration(
+                                                      color: sheetColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                              topLeft: Radius
+                                                                  .circular(30),
+                                                              topRight: Radius
+                                                                  .circular(
+                                                                      30))),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          print(
+                                                              "Delete Receiver");
+                                                          //Todo Delete Receiver
+                                                          Get.back();
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return CupertinoAlertDialog(
+                                                                title: Text(
+                                                                  "Delete Conformation",
+                                                                ),
+                                                                content: const Text(
+                                                                    "Delete message Have you confirmed!!"),
+                                                                actions: [
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () {
                                                                         Get.back();
-                                                                    },
-                                                                    child: Text(
-                                                                      "Delete For Me",
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .end,
+                                                                      },
+                                                                      child: Text(
+                                                                          "No")),
+                                                                  CupertinoDialogAction(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        Get.back();
+                                                                        String
+                                                                            dcId =
+                                                                            docIdList[index];
+                                                                        await FirebaseCloudServices.firebaseCloudServices.deleteChatSenderMe(
+                                                                            chatController.receiverEmail.value,
+                                                                            true,
+                                                                            dcId);
+                                                                      },
+                                                                      child: Text(
+                                                                          "Yes")),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                        child: Container(
+                                                          width: width,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: Center(
+                                                            child: Container(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(15),
+                                                              child: Text(
+                                                                "Delete",
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        textChanderColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.all(5),
+                                            width: (chatList[index]
+                                                        .message!
+                                                        .length <=
+                                                    34)
+                                                ? null
+                                                : width * 0.8,
+                                            decoration: BoxDecoration(
+                                              color: chatReadColorCurrentUser,
+                                              borderRadius:
+                                                  const BorderRadius.only(
+                                                      bottomRight:
+                                                          Radius.circular(10),
+                                                      bottomLeft:
+                                                          Radius.circular(10),
+                                                      topLeft:
+                                                          Radius.circular(10)),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(
+                                                "You deleted this message",
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    color: textColor),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 50,
+                                          width: 10,
+                                        ),
+                                      ],
+                                    )
+                                  : (chatList[index].deleteSender == true)
+                                      ? Container()
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                              width: 10,
+                                            ),
+                                            GestureDetector(
+                                              onLongPress: () {
+                                                showModalBottomSheet(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return Container(
+                                                      decoration: BoxDecoration(
+                                                          color: sheetColor,
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                  .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          30),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          30))),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Center(
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                print("Update");
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (context) {
+                                                                    TextEditingController
+                                                                        textUpdate =
+                                                                        TextEditingController(
+                                                                            text:
+                                                                                chatList[index].message);
+                                                                    return AlertDialog(
+                                                                      backgroundColor:
+                                                                          sheetColor,
+                                                                      title: Center(
+                                                                          child: Text(
+                                                                        "Edit Message",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              textChanderColor,
+                                                                        ),
+                                                                      )),
+                                                                      content:
+                                                                          Container(
+                                                                        decoration: BoxDecoration(
+                                                                            color:
+                                                                                textFieldContainer,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(50)),
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              textUpdate,
+                                                                          style:
+                                                                              TextStyle(color: textStyleColor),
+                                                                          decoration:
+                                                                              InputDecoration(
+                                                                            border:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(50)),
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(50)),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(50)),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Get.back();
+                                                                            },
+                                                                            child:
+                                                                                Text(
+                                                                              "Exit",
+                                                                              style: TextStyle(color: textChanderColor),
+                                                                            )),
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () async {
+                                                                            Get.back();
+                                                                            //todo confirmation for update text....
+                                                                            String
+                                                                                dcId =
+                                                                                docIdList[index];
+                                                                            await FirebaseCloudServices.firebaseCloudServices.updateChat(
+                                                                                chatController.receiverEmail.value,
+                                                                                textUpdate.text,
+                                                                                dcId);
+                                                                          },
+                                                                          child:
+                                                                              Text(
+                                                                            "Confirm",
+                                                                            style:
+                                                                                TextStyle(color: textChanderColor),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                width: width,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                color: Colors
+                                                                    .transparent,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        8.0),
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        15),
+                                                                child: Text(
+                                                                  "Edit Message",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          textChanderColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          20),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                            child: DottedLine(
+                                                              direction: Axis
+                                                                  .horizontal,
+                                                              alignment:
+                                                                  WrapAlignment
+                                                                      .center,
+                                                              lineLength: double
+                                                                  .infinity,
+                                                              lineThickness: 2,
+                                                              dashLength: 2.0,
+                                                              dashColor:
+                                                                  textColor,
+                                                              dashGradient:
+                                                                  dividerColorList,
+                                                              dashRadius: 0.0,
+                                                              dashGapRadius: 20,
+                                                            ),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              print("Delete");
+                                                              Get.back();
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return AlertDialog(
+                                                                    backgroundColor:
+                                                                        sheetColor,
+                                                                    content:
+                                                                        Text(
+                                                                      "Delete Message?",
                                                                       style: TextStyle(
                                                                           color:
-                                                                              textButtonColor,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
+                                                                              textSheetDeleteColor),
                                                                     ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                // mainAxisSize: MainAxisSize.min,
-                                                                children: [
-                                                                  TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Get.back();
-                                                                    },
-                                                                    child: Text(
-                                                                      "close",
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .end,
-                                                                      style:
-                                                                          TextStyle(
-                                                                        color:
-                                                                            textButtonColor,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
+                                                                    actions: [
+                                                                      Column(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.end,
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: [
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.end,
+                                                                            // mainAxisSize: MainAxisSize.min,
+                                                                            children: [
+                                                                              TextButton(
+                                                                                onPressed: () async {
+                                                                                  Get.back();
+                                                                                  String dcId = docIdList[index];
+                                                                                  await FirebaseCloudServices.firebaseCloudServices.deleteChatSenderAlso(chatController.receiverEmail.value, true, dcId);
+                                                                                },
+                                                                                child: Text("Delete For Everyone", textAlign: TextAlign.end, style: TextStyle(color: textButtonColor, fontWeight: FontWeight.bold)),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.end,
+                                                                            // mainAxisSize: MainAxisSize.min,
+                                                                            children: [
+                                                                              TextButton(
+                                                                                onPressed: () async {
+                                                                                  Get.back();
+                                                                                  String dcId = docIdList[index];
+                                                                                  await FirebaseCloudServices.firebaseCloudServices.deleteChatSenderMe(chatController.receiverEmail.value, true, dcId);
+                                                                                },
+                                                                                child: Text(
+                                                                                  "Delete For Me",
+                                                                                  textAlign: TextAlign.end,
+                                                                                  style: TextStyle(color: textButtonColor, fontWeight: FontWeight.bold),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          Row(
+                                                                            mainAxisAlignment:
+                                                                                MainAxisAlignment.end,
+                                                                            // mainAxisSize: MainAxisSize.min,
+                                                                            children: [
+                                                                              TextButton(
+                                                                                onPressed: () {
+                                                                                  Get.back();
+                                                                                },
+                                                                                child: Text(
+                                                                                  "close",
+                                                                                  textAlign: TextAlign.end,
+                                                                                  style: TextStyle(
+                                                                                    color: textButtonColor,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ],
                                                                       ),
-                                                                    ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              width: width,
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              color: Colors
+                                                                  .transparent,
+                                                              child: Center(
+                                                                child:
+                                                                    Container(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                  margin:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          15),
+                                                                  child: Text(
+                                                                    "Delete",
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            textChanderColor,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                        fontSize:
+                                                                            20),
                                                                   ),
-                                                                ],
+                                                                ),
                                                               ),
-                                                            ],
+                                                            ),
                                                           ),
                                                         ],
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: width,
-                                                  alignment: Alignment.center,
-                                                  color: Colors.transparent,
-                                                  child: Center(
-                                                    child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                              15),
-                                                      child: Text(
-                                                        "Delete",
-                                                        style: TextStyle(
-                                                            color:
-                                                                textChanderColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 20),
                                                       ),
-                                                    ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Container(
+                                                margin: const EdgeInsets.all(5),
+                                                width: (chatList[index]
+                                                            .message!
+                                                            .length <=
+                                                        34)
+                                                    ? null
+                                                    : width * 0.8,
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      chatReadColorCurrentUser,
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                          bottomRight: Radius
+                                                              .circular(10),
+                                                          bottomLeft:
+                                                              Radius.circular(
+                                                                  10),
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  10)),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Text(
+                                                    chatList[index].message!,
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        color: textColor),
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                            const SizedBox(
+                                              height: 50,
+                                              width: 10,
+                                            ),
+                                          ],
                                         );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.all(5),
-                                    width:
-                                        (chatList[index].message!.length <= 34)
-                                            ? null
-                                            : width * 0.8,
-                                    decoration: BoxDecoration(
-                                      color: chatReadColorCurrentUser,
-                                      borderRadius: const BorderRadius.only(
-                                          bottomRight: Radius.circular(10),
-                                          bottomLeft: Radius.circular(10),
-                                          topLeft: Radius.circular(10)),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(
-                                        chatList[index].message!,
-                                        style: TextStyle(
-                                            fontSize: 17, color: textColor),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                  width: 10,
-                                ),
-                              ],
-                            );
                     },
                   );
                 },
@@ -885,36 +936,49 @@ class ChatPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(9),
-              child: TextFormField(
-                controller: chatController.txtMassage,
-                cursorColor: cursorTextColor,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      borderSide: BorderSide(color: Colors.red)),
-                  // focusedBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(50)),borderSide: BorderSide(color: Colors.blueGrey)),
-                  // enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(50)),borderSide: BorderSide(color: Colors.red)),
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      if (chatController.txtMassage.text.isNotEmpty) {
-                        ChatModel chat = ChatModel(
-                          sender:
-                              AuthServices.authServices.getCurrentUser()!.email,
-                          receiver: chatController.receiverEmail.value,
-                          message: chatController.txtMassage.text,
-                          time: Timestamp.now(),
-                          editTime: Timestamp.now(),
-                          edit: false,
-                          delete: false,
-                          deleteSender: false,
-                          deleteReceiver: false,
-                        );
-                        await FirebaseCloudServices.firebaseCloudServices
-                            .addChatFireStore(chat);
-                        chatController.txtMassage.clear();
-                      }
-                    },
-                    icon: const Icon(Icons.send),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                child: TextFormField(
+                  controller: chatController.txtMassage,
+                  cursorColor: cursorTextColor,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderSide: BorderSide(color: Colors.transparent)),
+                    enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderSide: BorderSide(color: Colors.transparent)),
+                    focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderSide: BorderSide(color: Colors.transparent)),
+                    // focusedBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(50)),borderSide: BorderSide(color: Colors.blueGrey)),
+                    // enabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(50)),borderSide: BorderSide(color: Colors.red)),
+                    suffixIcon: IconButton(
+                      onPressed: () async {
+                        if (chatController.txtMassage.text.isNotEmpty) {
+                          ChatModel chat = ChatModel(
+                            sender:
+                                AuthServices.authServices.getCurrentUser()!.email,
+                            receiver: chatController.receiverEmail.value,
+                            message: chatController.txtMassage.text,
+                            time: Timestamp.now(),
+                            editTime: Timestamp.now(),
+                            edit: false,
+                            delete: false,
+                            deleteSender: false,
+                            deleteReceiver: false,
+                          );
+                          chatController.txtMassage.clear();
+                          await FirebaseCloudServices.firebaseCloudServices
+                              .addChatFireStore(chat);
+                        }
+                      },
+                      icon: const Icon(Icons.send),
+                    ),
                   ),
                 ),
               ),
