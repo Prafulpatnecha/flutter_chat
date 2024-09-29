@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/view/command/my_app.dart';
 // import 'package:flutter_chat/view/command/my_app.dart';
+import 'controller/online_controller.dart';
 import 'firebase_options.dart';
 // https://console.firebase.google.com/project/flutterchat-e5565/overview
 Future<void> main()

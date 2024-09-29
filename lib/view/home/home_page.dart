@@ -1,18 +1,120 @@
+import 'dart:ui';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
+import 'package:flutter_chat/services/auth_services.dart';
 import 'package:flutter_chat/services/firebase_cloud_services.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:get/get.dart';
 import 'package:stories_for_flutter/stories_for_flutter.dart';
 
+import '../../controller/online_controller.dart';
 import '../../utils/colors_globle.dart';
 import 'components/home_components.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget{
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>{
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addObserver(this);
+  //   FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), true);
+  // }
+  // final ScrollController _scrollController = ScrollController();
+  late final AppLifecycleListener _listener;
+  final List<String> _states = <String>[];
+  late AppLifecycleState? _state;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), true,false);
+    _state = SchedulerBinding.instance.lifecycleState;
+    _listener = AppLifecycleListener(
+      onShow: () async {
+        print('\n\n\nshow\n\n\n');
+        await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), true,false);
+      },
+      onResume: () async {
+        print('\n\n\nresume\n\n\n');
+        await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), true,false);
+      },
+      onHide: () => print('\n\n\nhide\n\n\n'),
+      onInactive: () async {
+        print('\n\n\ninactive\n\n\n');
+        await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), false,false);
+      },
+      onPause: () async {
+        print('\n\n\npause\n\n\n');
+        await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), false,false);
+      },
+      onDetach: () async {
+        print("\n\n\n\nonDetach\n\n\n\n");
+        await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), false,false);
+      },
+      onRestart: () => print('\n\n\nrestart\n\n\n'),
+      // This fires for each state change. Callbacks above fire only for
+      // specific state transitions.
+      // onStateChange: _handleStateChange,
+    );
+    if (_state != null) {
+      _states.add(_state!.name);
+    }
+  }
+
+  @override
+  void dispose() {
+    _listener.dispose();
+    super.dispose();
+  }
+
+  // void _handleTransition(String name) {
+  //   setState(() {
+  //     _states.add(name);
+  //   });
+  //   _scrollController.animateTo(
+  //     _scrollController.position.maxScrollExtent,
+  //     duration: const Duration(milliseconds: 200),
+  //     curve: Curves.easeOut,
+  //   );
+  // }
+
+  // void _handleStateChange(AppLifecycleState state) {
+  //   setState(() {
+  //     _state = state;
+  //   });
+  // }
+
+  // @override
+  // Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   super.didChangeAppLifecycleState(state);
+  //   if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
+  //     await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), false);
+  //   } else if (state == AppLifecycleState.resumed) {
+  //     await FirebaseCloudServices.firebaseCloudServices.changeOnline(Timestamp.now(), true);
+  //   }
+  // }
+
+
+
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance.removeObserver(this);
+  //   _listener.dispose();
+  //   super.dispose();
+  // }
+
+  @override
   Widget build(BuildContext context) {
+    GetOnlineController getOnlineController=Get.put(GetOnlineController());
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -65,16 +167,17 @@ class HomePage extends StatelessWidget {
                                                   image: NetworkImage(
                                                     "https://wallpapers.com/images/high/whatsapp-chat-cherry-blossom-tree-n83z61y72w2h6hyw.webp",
                                                   ),
-                                                  fit: BoxFit.cover)),
+                                                  fit: BoxFit.cover),),
                                         ),
                                       )
                                     ],
                                     name: "User",
-                                    thumbnail: NetworkImage(userModal[0].image))
+                                    thumbnail: NetworkImage(userModal[0].image),),
                               ],
                             ),
                             Stories(
                               displayProgress: true,
+
                               storyItemList: List.generate(
                                 userModal.length,
                                 (index) {
@@ -109,10 +212,13 @@ class HomePage extends StatelessWidget {
                         child: Row(
                           children: [
                             Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
+                            Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
                             const Spacer(),
-                            IconButton(onPressed: () {
+                            IconButton(onPressed: () async {
+                              await AuthServices.authServices.signOutEmail();
+                              Get.offAndToNamed("/login");
                               //Todo this is blank and not working... but then using next time...
-                            }, icon: const Icon(Icons.search))
+                            }, icon: const Icon(Icons.logout_outlined))//search
                           ],
                         ),
                       ),

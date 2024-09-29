@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:clay_containers/constants.dart';
 import 'package:clay_containers/widgets/clay_container.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';
@@ -74,7 +75,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: yourTextFormField(
                   textController: authController.textUserName,
                   hintTextFind: "Enter Your User Name",
@@ -82,7 +83,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: yourTextFormField(
                   textController: authController.textPhoneNo,
                   hintTextFind: "Enter Your Phone No",
@@ -90,7 +91,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: yourTextFormField(
                   textController: authController.textEmail,
                   hintTextFind: "Enter Your Email",
@@ -98,7 +99,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: passwordTextFormField(
                 textController: authController.textPassword,
                 hintTextFind: "Enter Your Password",
@@ -106,23 +107,23 @@ Align signUpAlign(double height, double width, AuthController authController) {
                 iconButton: IconButton(
                   onPressed: () {
                     authController.passwordHide.value =
-                        !authController.passwordHide.value;
+                    !authController.passwordHide.value;
                   },
                   icon: (authController.passwordHide.value == true)
                       ? const Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.amber,
-                        )
+                    Icons.remove_red_eye,
+                    color: Colors.amber,
+                  )
                       : const Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: Colors.amber,
-                        ),
+                    Icons.remove_red_eye_outlined,
+                    color: Colors.amber,
+                  ),
                 ),
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: passwordTextFormField(
                   textController: authController.textConfirmPassword,
                   hintTextFind: "Enter Your Confirm Password",
@@ -130,17 +131,17 @@ Align signUpAlign(double height, double width, AuthController authController) {
                   iconButton: IconButton(
                       onPressed: () {
                         authController.passwordHide.value =
-                            !authController.passwordHide.value;
+                        !authController.passwordHide.value;
                       },
                       icon: (authController.passwordHide.value == true)
                           ? const Icon(
-                              Icons.remove_red_eye,
-                              color: Colors.amber,
-                            )
+                        Icons.remove_red_eye,
+                        color: Colors.amber,
+                      )
                           : const Icon(
-                              Icons.remove_red_eye_outlined,
-                              color: Colors.amber,
-                            ))),
+                        Icons.remove_red_eye_outlined,
+                        color: Colors.amber,
+                      ))),
             ),
             SizedBox(
               height: height * 0.04,
@@ -149,59 +150,62 @@ Align signUpAlign(double height, double width, AuthController authController) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GetBuilder<AuthController>(
-                  builder: (controller) => GestureDetector(
-                    onTap: () async {
+                  builder: (controller) =>
+                      GestureDetector(
+                        onTap: () async {
+                          //Todo Image Picker Code The Place!
+                          ImagePicker imagePicker = ImagePicker();
+                          XFile? xFile = await imagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          // // print("object");
+                          authController.imagePath = File(xFile!.path)
+                              .obs; //todo image file to save then work but not long time using firebase only this file path save...
+                          CloudStorageFirebaseSaveAnyFiles
+                              .cloudStorageFirebaseSaveAnyFiles
+                              .imageStorageIntoEmail(
+                              authController.imagePath!.value);
+                          //
+                          // Directory imageDirectory= await getApplicationDocumentsDirectory();
+                          // authController.imageString.value = "${imageDirectory.absolute}/profileImage.png";
+                          // print(authController.imagePath!.value.toString());
 
-                      //Todo Image Picker Code The Place!
-                      ImagePicker imagePicker = ImagePicker();
-                      XFile? xFile = await imagePicker.pickImage(
-                          source: ImageSource.gallery);
-                      // // print("object");
-                      authController.imagePath = File(xFile!.path).obs; //todo image file to save then work but not long time using firebase only this file path save...
-                      CloudStorageFirebaseSaveAnyFiles.cloudStorageFirebaseSaveAnyFiles.imageStorageIntoEmail(authController.imagePath!.value);
-                      //
-                      // Directory imageDirectory= await getApplicationDocumentsDirectory();
-                      // authController.imageString.value = "${imageDirectory.absolute}/profileImage.png";
-                      // print(authController.imagePath!.value.toString());
 
-
-
-                      authController
-                          .updateObs(); //any update work then button click...
-                    },
-                    child: (authController.imagePath == null)
-                        ? ClayContainer(
+                          authController
+                              .updateObs(); //any update work then button click...
+                        },
+                        child: (authController.imagePath == null)
+                            ? ClayContainer(
+                          height: 50,
+                          width: 50,
+                          depth: -20,
+                          curveType: CurveType.concave,
+                          borderRadius: 10,
+                          color: Colors.amberAccent.shade100,
+                          child: const Icon(
+                            Bootstrap.person_add,
+                            size: 30,
+                          ),
+                        )
+                            : ClayContainer(
+                          height: 50,
+                          width: 50,
+                          depth: -20,
+                          curveType: CurveType.concave,
+                          borderRadius: 10,
+                          color: Colors.amberAccent.shade100,
+                          child: Container(
                             height: 50,
                             width: 50,
-                            depth: -20,
-                            curveType: CurveType.concave,
-                            borderRadius: 10,
-                            color: Colors.amberAccent.shade100,
-                            child: const Icon(
-                              Bootstrap.person_add,
-                              size: 30,
-                            ),
-                          )
-                        : ClayContainer(
-                            height: 50,
-                            width: 50,
-                            depth: -20,
-                            curveType: CurveType.concave,
-                            borderRadius: 10,
-                            color: Colors.amberAccent.shade100,
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: FileImage(File(
-                                        authController.imagePath!.value.path)),
-                                    fit: BoxFit.cover),
-                              ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                  image: FileImage(File(
+                                      authController.imagePath!.value.path)),
+                                  fit: BoxFit.cover),
                             ),
                           ),
-                  ),
+                        ),
+                      ),
                 ),
                 GestureDetector(
                   onTap: () async {
@@ -239,7 +243,9 @@ Align signUpAlign(double height, double width, AuthController authController) {
                             token: "",
                             image: authController.imagePath == null
                                 ? "https://media.istockphoto.com/id/1316420668/vector/user-icon-human-person-symbol-social-profile-icon-avatar-login-sign-web-user-symbol.jpg?s=612x612&w=0&k=20&c=AhqW2ssX8EeI2IYFm6-ASQ7rfeBWfrFFV4E87SaFhJE="
-                                : authController.imagePath!.value.path);
+                                : authController.imagePath!.value.path,
+                            online: true,
+                            lastTime: Timestamp.now(), typingChat: false);
                         FirebaseCloudServices.firebaseCloudServices
                             .insertUserIntoFireStore(userModel);
                         Get.offAndToNamed('/');
@@ -271,26 +277,27 @@ Align signUpAlign(double height, double width, AuthController authController) {
                   // onTap: () {
                   // },
                   child: Obx(
-                    () => ClayContainer(
-                      height: 40,
-                      width: 80,
-                      depth: 10,
-                      spread: 3,
-                      borderRadius: 10,
-                      color: Colors.amber.shade100,
-                      curveType: authController.loginColor.value
-                          ? CurveType.concave
-                          : CurveType.convex,
-                      child: const Center(
-                        child: Text(
-                          "SignUp",
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontWeight: FontWeight.bold,
+                        () =>
+                        ClayContainer(
+                          height: 40,
+                          width: 80,
+                          depth: 10,
+                          spread: 3,
+                          borderRadius: 10,
+                          color: Colors.amber.shade100,
+                          curveType: authController.loginColor.value
+                              ? CurveType.concave
+                              : CurveType.convex,
+                          child: const Center(
+                            child: Text(
+                              "SignUp",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
                   ),
                 ),
               ],

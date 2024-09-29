@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_chat/controller/auth_controller.dart';
 import 'package:flutter_chat/modal/chat_model.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';
+import 'package:flutter_chat/utils/globle_variable.dart';
 
 class FirebaseCloudServices {
   FirebaseCloudServices._();
@@ -19,6 +21,9 @@ class FirebaseCloudServices {
       "image": userModal.image,
       "name": userModal.name,
       "token": userModal.token,
+      "online" : userModal.online,
+      "lastTime" : userModal.lastTime,
+      "typingChat" : userModal.typingChat,
     });
   }
 
@@ -143,5 +148,42 @@ class FirebaseCloudServices {
       "editTime": Timestamp.now(),
       "deleteReceiver": delete, //delete Receiver
     });
+  }
+
+  //todo online Status
+  Future<void> changeOnline(Timestamp lastTime,bool status,bool typingChat)
+  async {
+    String email = AuthServices.authServices.getCurrentUser()!.email!;
+    await firebaseFireStore.collection("users").doc(email).update({
+      "lastTime" : lastTime,
+      "online" : status,
+      "typingChat" : typingChat,
+    });
+  }
+
+  //todo find User Online Yes And No
+  Stream<DocumentSnapshot<Map<String, dynamic>>> findUserOnlineOfflineAndLastTime()
+  {
+    String email = chatController.receiverEmail.value;
+    return firebaseFireStore.collection("users").doc(email).snapshots();
+  }
+
+  //todo user msg read and unread massage
+  Future<void> userReadAndUnRead(
+      String receiver, bool readAndUnReadMassage, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      'readAndUnReadMassage':readAndUnReadMassage,
+    }
+    );
   }
 }

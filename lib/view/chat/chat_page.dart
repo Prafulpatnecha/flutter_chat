@@ -1,9 +1,12 @@
 import 'package:clay_containers/clay_containers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/modal/chat_model.dart';
+import 'package:flutter_chat/modal/massageTypeModel.dart';
+import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';
 import 'package:flutter_chat/services/firebase_cloud_services.dart';
 import 'package:flutter_chat/utils/globle_variable.dart';
@@ -37,7 +40,7 @@ class ChatPage extends StatelessWidget {
           children: [
             StreamBuilder(
                 stream: FirebaseCloudServices.firebaseCloudServices
-                    .readChatFromFireStore(chatController.receiverEmail.value),
+                    .findUserOnlineOfflineAndLastTime(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(child: Text(snapshot.error.toString()));
@@ -45,11 +48,13 @@ class ChatPage extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  List data = snapshot.data!.docs;
-                  List<ChatModel> chatList = [];
-                  for (QueryDocumentSnapshot snap in data) {
-                    chatList.add(ChatModel.fromChat(snap.data() as Map));
-                  }
+                  Map? chatUser = snapshot.data!.data();
+                  //todo not working...
+                  // List<ChatModel> chatList = [];
+                  // for (QueryDocumentSnapshot snap in data) {
+                  //   chatList.add(ChatModel.fromChat(snap.data() as Map));
+                  // }
+
                   return Container(
                     height: 100,
                     width: width,
@@ -84,10 +89,22 @@ class ChatPage extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         color: textColor),
                                   ),
-                                  const Text(
-                                    "Online",
-                                    style: TextStyle(),
-                                  ),
+                                  if (chatUser!["typingChat"] == true)
+                                    const Text(
+                                      "Typing...",
+                                      style: TextStyle(color: Colors.green),
+                                    )
+                                  else if (chatUser["online"] == true)
+                                    Text(
+                                      "Online",
+                                      style: TextStyle(color: Colors.green),
+                                    )
+                                  else
+                                    Text(
+                                      "Offline\n${chatUser["lastTime"].toDate().hour}:${chatUser["lastTime"].toDate().minute}/${chatUser["lastTime"].toDate().day}:${(chatUser["lastTime"].toDate().month > 12) ? chatUser["lastTime"].toDate().month : "0${chatUser["lastTime"].toDate().month}"}:${chatUser["lastTime"].toDate().year}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
                                 ],
                               ),
                               const Spacer(),
@@ -100,16 +117,15 @@ class ChatPage extends StatelessWidget {
                                 curveType: CurveType.concave,
                                 color: containerColor,
                                 child: Container(
-                                  decoration: const BoxDecoration(
+                                  decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     //Todo This one On and next time work incomplete
-                                    // image: DecorationImage(
-                                    //     image: //(userModal[index].image.contains('file:'))?
-                                    //     // FileImage(File(userModal[index].image),),
-                                    //     NetworkImage(
-                                    //         chatList[index].image)
-                                    //   //todo image set work is not complete <--------------------------------------------------
-                                    // ),
+                                    image: DecorationImage(
+                                        image: NetworkImage(chatUser["image"])
+                                        //(userModal[index].image.contains('file:'))?
+                                        // FileImage(File(userModal[index].image),),
+                                        //todo image set work is not complete <--------------------------------------------------
+                                        ),
                                   ),
                                 ),
                               ),
@@ -141,10 +157,18 @@ class ChatPage extends StatelessWidget {
                     docIdList.add(snap.id);
                     chatList.add(ChatModel.fromChat(snap.data() as Map));
                   }
+
                   return ListView.builder(
                     reverse: true,
                     itemCount: chatList.length,
                     itemBuilder: (context, index) {
+                      // Future<void> working()
+                      // async {
+                        if(chatList[index].sender != AuthServices.authServices.getCurrentUser()!.email)
+                        {
+                          FirebaseCloudServices.firebaseCloudServices.userReadAndUnRead(chatController.receiverEmail.value, true, docIdList[index]);
+                        }
+                      // }
                       return (chatList[index].sender !=
                               AuthServices.authServices.getCurrentUser()!.email)
                           ? (chatList[index].deleteReceiver == true)
@@ -217,7 +241,6 @@ class ChatPage extends StatelessWidget {
                                                                       },
                                                                       child: Text(
                                                                           "Yes")),
-
                                                                 ],
                                                               );
                                                             },
@@ -724,14 +747,16 @@ class ChatPage extends StatelessWidget {
                                                                         15),
                                                                 child: Text(
                                                                   "Edit Message",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          textChanderColor,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      fontSize:
-                                                                          20),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color:
+                                                                        textChanderColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20,
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ),
@@ -911,11 +936,19 @@ class ChatPage extends StatelessWidget {
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
                                                       10.0),
-                                                  child: Text(
-                                                    chatList[index].message!,
-                                                    style: TextStyle(
-                                                        fontSize: 17,
-                                                        color: textColor),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        chatList[index].message!+"  ",
+                                                        style: TextStyle(
+                                                            fontSize: 17,
+                                                            color: textColor),
+                                                      ),
+                                                      //todo sender read.............................................................................
+                                                      (chatList[index].readAndUnReadMassage==false)?Icon(Icons.done,size: 18):Icon(Icons.done_all,size: 18,color: Colors.blue,)
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -939,10 +972,30 @@ class ChatPage extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.circular(20)
-                ),
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(20)),
                 child: TextFormField(
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      print("Yes Working...\n\n\n");
+                      FirebaseCloudServices.firebaseCloudServices
+                          .changeOnline(Timestamp.now(), true, true);
+                    } else {
+                      FirebaseCloudServices.firebaseCloudServices
+                          .changeOnline(Timestamp.now(), true, false);
+                    }
+                  },
+                  onTapOutside: (event) {
+                    print('\n\n\nonTapOutside\n\n');
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  // onChanged: (value) {
+                  //   print("object");
+                  // },
+                  // onSaved: (newValue) {
+                  //   print("object");
+                  // },
+                  // focusNode: FocusNode(canRequestFocus: true),
                   controller: chatController.txtMassage,
                   cursorColor: cursorTextColor,
                   decoration: InputDecoration(
@@ -961,8 +1014,9 @@ class ChatPage extends StatelessWidget {
                       onPressed: () async {
                         if (chatController.txtMassage.text.isNotEmpty) {
                           ChatModel chat = ChatModel(
-                            sender:
-                                AuthServices.authServices.getCurrentUser()!.email,
+                            sender: AuthServices.authServices
+                                .getCurrentUser()!
+                                .email,
                             receiver: chatController.receiverEmail.value,
                             message: chatController.txtMassage.text,
                             time: Timestamp.now(),
@@ -970,11 +1024,13 @@ class ChatPage extends StatelessWidget {
                             edit: false,
                             delete: false,
                             deleteSender: false,
-                            deleteReceiver: false,
+                            deleteReceiver: false, massageType: MassageType.massage, readAndUnReadMassage: false,
                           );
                           chatController.txtMassage.clear();
                           await FirebaseCloudServices.firebaseCloudServices
                               .addChatFireStore(chat);
+                          FirebaseCloudServices.firebaseCloudServices
+                              .changeOnline(Timestamp.now(), true, false);
                         }
                       },
                       icon: const Icon(Icons.send),

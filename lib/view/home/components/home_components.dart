@@ -13,7 +13,9 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
         onTap: () {
           chatController.getReceiver(
               userModal[index].email,
-              userModal[index].name);
+              userModal[index].name,
+              userModal[index].image
+          );
           Get.toNamed("/chat");
         },
         title: Text(userModal[index].name),
