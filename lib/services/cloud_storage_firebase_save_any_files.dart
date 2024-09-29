@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CloudStorageFirebaseSaveAnyFiles {
   CloudStorageFirebaseSaveAnyFiles._();
@@ -21,5 +22,14 @@ class CloudStorageFirebaseSaveAnyFiles {
     final filePath = "Profile/${DateTime.now()}.jpg";
     await _firebaseStorage.ref(filePath).putFile(image);
     String fileSaveImageUrlEmailProfile = await _firebaseStorage.ref(filePath).getDownloadURL();
+  }
+
+  //Todo Sander And Receiver image Well be sharing
+  Future<String> imageStorageIntoChatSander(File fileImage)
+  async {
+    final filePath = "image/${fileImage.path}.png";
+    await _firebaseStorage.ref(filePath).putFile(fileImage);
+    String fileSaveImageUrl = await _firebaseStorage.ref(filePath).getDownloadURL();
+    return fileSaveImageUrl;
   }
 }

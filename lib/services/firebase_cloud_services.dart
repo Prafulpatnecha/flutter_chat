@@ -21,9 +21,9 @@ class FirebaseCloudServices {
       "image": userModal.image,
       "name": userModal.name,
       "token": userModal.token,
-      "online" : userModal.online,
-      "lastTime" : userModal.lastTime,
-      "typingChat" : userModal.typingChat,
+      "online": userModal.online,
+      "lastTime": userModal.lastTime,
+      "typingChat": userModal.typingChat,
     });
   }
 
@@ -151,19 +151,19 @@ class FirebaseCloudServices {
   }
 
   //todo online Status
-  Future<void> changeOnline(Timestamp lastTime,bool status,bool typingChat)
-  async {
+  Future<void> changeOnline(
+      Timestamp lastTime, bool status, bool typingChat) async {
     String email = AuthServices.authServices.getCurrentUser()!.email!;
     await firebaseFireStore.collection("users").doc(email).update({
-      "lastTime" : lastTime,
-      "online" : status,
-      "typingChat" : typingChat,
+      "lastTime": lastTime,
+      "online": status,
+      "typingChat": typingChat,
     });
   }
 
   //todo find User Online Yes And No
-  Stream<DocumentSnapshot<Map<String, dynamic>>> findUserOnlineOfflineAndLastTime()
-  {
+  Stream<DocumentSnapshot<Map<String, dynamic>>>
+      findUserOnlineOfflineAndLastTime() {
     String email = chatController.receiverEmail.value;
     return firebaseFireStore.collection("users").doc(email).snapshots();
   }
@@ -182,8 +182,7 @@ class FirebaseCloudServices {
         .collection("chat")
         .doc(dcId)
         .update({
-      'readAndUnReadMassage':readAndUnReadMassage,
-    }
-    );
+      'readAndUnReadMassage': readAndUnReadMassage,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/view/auth/login_process_page.dart';
 import 'package:flutter_chat/view/chat/chat_page.dart';
+import 'package:flutter_chat/view/chat/image_view/image_show_page.dart';
 import 'package:get/get.dart';
 
 import '../auth/auth_manager.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/home", page: () => const HomePage(),transition: Transition.circularReveal),
         GetPage(name: "/login", page: () => const LoginProcessPage(),transition: Transition.native),
         GetPage(name: "/chat", page: () => const ChatPage(),transition: Transition.native),
+        GetPage(name: "/imageShow", page: () => const ImageShowPage(),transition: Transition.circularReveal),
       ],
     );
   }

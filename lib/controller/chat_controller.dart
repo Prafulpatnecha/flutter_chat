@@ -5,6 +5,7 @@ class ChatController extends GetxController {
   RxString receiverEmail = "".obs;
   RxString receiverName = "".obs;
   RxString receiverImage = "".obs;
+  RxString imageShow = "".obs;
   TextEditingController txtMassage = TextEditingController();
   void getReceiver(String email, String name,String image) {
     receiverName.value = name;
