@@ -12,16 +12,11 @@ class CloudStorageFirebaseSaveAnyFiles {
 
 
   //TODO image save fire Storage
-  Future<void> imageStorageIntoEmail(File image) async {
-    // print("object 1");
-    // final imageSave = await getApplicationDocumentsDirectory();
-    // print("object 2");
-    // print("object 3");
-    // final file =File(filePath);
-    // print("object 4");
+  Future<String> imageStorageIntoEmail(File image) async {
     final filePath = "Profile/${DateTime.now()}.jpg";
     await _firebaseStorage.ref(filePath).putFile(image);
     String fileSaveImageUrlEmailProfile = await _firebaseStorage.ref(filePath).getDownloadURL();
+    return fileSaveImageUrlEmailProfile;
   }
 
   //Todo Sander And Receiver image Well be sharing
@@ -33,3 +28,9 @@ class CloudStorageFirebaseSaveAnyFiles {
     return fileSaveImageUrl;
   }
 }
+// print("object 1");
+// final imageSave = await getApplicationDocumentsDirectory();
+// print("object 2");
+// print("object 3");
+// final file =File(filePath);
+// print("object 4");

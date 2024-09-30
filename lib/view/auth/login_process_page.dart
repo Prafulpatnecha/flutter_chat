@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_chat/controller/auth_controller.dart';
+import 'package:flutter_chat/utils/colors_globle.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_neumorphic_plus/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
@@ -20,29 +22,85 @@ class LoginProcessPage extends StatelessWidget {
     AuthController authController = Get.put(AuthController());
     return Scaffold(
       body: Obx(
-        () => ClayContainer(
+        () => Container(
           height: height,
           width: width,
-          depth: 30,
-          curveType: CurveType.convex,
-          color: Colors.amber.shade50,
+          // depth: 30,
+          // curveType: CurveType.convex,
+          color: containerColor,
           child: Stack(
             children: [
-              ...List.generate(
-                40,
-                (index) {
-                  Random random = Random();
-                  return buildAlignShep(height * random.nextDouble() * 0.1,
-                      width * random.nextDouble() * 0.1,
-                      x: (random.nextBool())
-                          ? -random.nextDouble()
-                          : random.nextDouble(),
-                      y: (random.nextBool())
-                          ? -random.nextDouble()
-                          : random.nextDouble(),
-                      z: random.nextDouble(),
-                      random: random);
-                },
+              Align(
+                alignment: Alignment.topCenter,
+                child: ClipPath(
+                  clipper: WaveClipperOne(),
+                  child: Container(
+                    width: width,
+                    height: height*0.31,
+                    color: chatColorList[0],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: ClipPath(
+                  clipper: WaveClipperOne(),
+                  child: Container(
+                    width: width,
+                    height: height*0.3,
+                    color: chatColorList[3],
+                  ),
+                ),
+              ),
+              //todo
+              // ...List.generate(
+              //   40,
+              //   (index) {
+              //     Random random = Random();
+              //     return buildAlignShep(height * random.nextDouble() * 0.1,
+              //         width * random.nextDouble() * 0.1,
+              //         x: (random.nextBool())
+              //             ? -random.nextDouble()
+              //             : random.nextDouble(),
+              //         y: (random.nextBool())
+              //             ? -random.nextDouble()
+              //             : random.nextDouble(),
+              //         z: random.nextDouble(),
+              //         random: random);
+              //   },
+              // ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ClipPath(
+                  clipper: WaveClipperTwo(reverse: true),
+                  child: Container(
+                    width: width,
+                    height: height*0.22,
+                    color: chatColorList[1],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ClipPath(
+                  clipper: WaveClipperOne(reverse: true),
+                  child: Container(
+                    width: width,
+                    height: height*0.2,
+                    color: chatColorList[0],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ClipPath(
+                  clipper: WaveClipperTwo(reverse: true),
+                  child: Container(
+                    width: width,
+                    height: height*0.18,
+                    color: chatColorList[2],
+                  ),
+                ),
               ),
               FlipCard(
                 // onFlipDone: (isFront) {
@@ -50,7 +108,8 @@ class LoginProcessPage extends StatelessWidget {
                 // },
                 front: signInAlign(height, width, authController),
                 back: signUpAlign(height, width, authController),
-              )
+              ),
+
             ],
           ),
         ),

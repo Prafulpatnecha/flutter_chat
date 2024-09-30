@@ -5,7 +5,6 @@ import 'package:clay_containers/widgets/clay_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/controller/auth_controller.dart';
 import 'package:flutter_chat/services/auth_services.dart';
 import 'package:flutter_chat/services/firebase_cloud_services.dart';
 import 'package:get/get.dart';
@@ -116,13 +115,10 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
         child: DottedLine(
           direction: Axis.horizontal,
           alignment: WrapAlignment.center,
-          // lineLength: double.infinity,
           lineThickness: 0.8,
           dashLength: 0.05,
           dashGradient: [colorsDotted[random.nextInt(colorsDotted.length)], colorsDotted[random.nextInt(colorsDotted.length)]],
           dashRadius: 5.0,
-          // dashGapLength: 9.0,
-
           dashGapColor: Colors.transparent,
           dashGapGradient: [colorsDotted[random.nextInt(colorsDotted.length)], colorsDotted[random.nextInt(colorsDotted.length)]],
           dashGapRadius: 0.0,

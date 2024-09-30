@@ -153,58 +153,61 @@ class _HomePageState extends State<HomePage>{
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Stories(
-                              displayProgress: true,
-                              storyItemList: [
-                                StoryItem(
-                                    stories: [
-                                      Scaffold(
-                                        body: Container(
-                                          decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    "https://wallpapers.com/images/high/whatsapp-chat-cherry-blossom-tree-n83z61y72w2h6hyw.webp",
-                                                  ),
-                                                  fit: BoxFit.cover),),
-                                        ),
-                                      )
-                                    ],
-                                    name: "User",
-                                    thumbnail: NetworkImage(userModal[0].image),),
-                              ],
-                            ),
-                            Stories(
-                              displayProgress: true,
-
-                              storyItemList: List.generate(
-                                userModal.length,
-                                (index) {
-                                  return StoryItem(
-                                    stories: [
-                                      Scaffold(
-                                        body: Container(
-                                          decoration: const BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    "https://wallpapers.com/images/high/whatsapp-chat-cherry-blossom-tree-n83z61y72w2h6hyw.webp",
-                                                  ),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      )
-                                    ],
-                                    name: userModal[index]
-                                        .name
-                                        .capitalize
-                                        .toString(),
-                                    thumbnail:
-                                        NetworkImage(userModal[index].image),
-                                  );
-                                },
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Stories(
+                                displayProgress: true,
+                                storyItemList: [
+                                  StoryItem(
+                                      stories: [
+                                        Scaffold(
+                                          body: Container(
+                                            decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      "https://wallpapers.com/images/high/whatsapp-chat-cherry-blossom-tree-n83z61y72w2h6hyw.webp",
+                                                    ),
+                                                    fit: BoxFit.cover),),
+                                          ),
+                                        )
+                                      ],
+                                      name: "User",
+                                      thumbnail: NetworkImage(userModal[0].image),),
+                                ],
                               ),
-                            ),
-                          ],
+                              Stories(
+                                displayProgress: true,
+
+                                storyItemList: List.generate(
+                                  userModal.length,
+                                  (index) {
+                                    return StoryItem(
+                                      stories: [
+                                        Scaffold(
+                                          body: Container(
+                                            decoration: const BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      "https://wallpapers.com/images/high/whatsapp-chat-cherry-blossom-tree-n83z61y72w2h6hyw.webp",
+                                                    ),
+                                                    fit: BoxFit.cover)),
+                                          ),
+                                        )
+                                      ],
+                                      name: userModal[index]
+                                          .name
+                                          .capitalize
+                                          .toString(),
+                                      thumbnail:
+                                          NetworkImage(userModal[index].image),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(
@@ -212,13 +215,16 @@ class _HomePageState extends State<HomePage>{
                         child: Row(
                           children: [
                             Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
-                            Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
+                            // Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
                             const Spacer(),
                             IconButton(onPressed: () async {
                               await AuthServices.authServices.signOutEmail();
                               Get.offAndToNamed("/login");
                               //Todo this is blank and not working... but then using next time...
-                            }, icon: const Icon(Icons.logout_outlined))//search
+                            }, icon: const Icon(Icons.logout_outlined)),//search
+                            IconButton(onPressed: () async {
+                              Get.offAndToNamed("/profile");
+                            }, icon: const Icon(Icons.person))
                           ],
                         ),
                       ),

@@ -131,8 +131,7 @@ class FirebaseCloudServices {
   }
 
   //Todo DELETE Receiver
-  Future<void> deleteChatReceiver(
-      String receiver, bool delete, String dcId) async {
+  Future<void> deleteChatReceiver(String receiver, bool delete, String dcId) async {
     // ChatModel chat ;//update
     String sender = AuthServices.authServices.getCurrentUser()!.email!;
     List doc = [sender, receiver];
