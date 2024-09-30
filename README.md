@@ -42,7 +42,7 @@ https://github.com/user-attachments/assets/168828d6-e6e0-41ed-b97f-2dece5283028
 
 <h1></h1>
 <div align="center">
-<a href="https://drive.google.com/drive/folders/1MP-Z_2NAWLzAo_MpO5jEXChFsSPslDqo?usp=sharing">-> Code File Link <-</a>
+<a href="https://drive.google.com/drive/folders/1MP-Z_2NAWLzAo_MpO5jEXChFsSPslDqo?usp=sharing">-> Code Video Link <-</a>
 </div>
 <h1></h1>
 
