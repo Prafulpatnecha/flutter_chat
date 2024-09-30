@@ -29,7 +29,7 @@ https://github.com/user-attachments/assets/168828d6-e6e0-41ed-b97f-2dece5283028
 
 ###
 <h1></h1>
-<h3 align="center"><i>18.2 CRUD Operation in Budget Tracker App Update Work 2</i></h3>
+<h3 align="center"><i>Chat App</i></h3>
 <h1></h1>
 <div align="center">
 <img src="https://github.com/Prafulpatnecha/flutter_chat/blob/master/image1.png" height=450px hspace=20>
