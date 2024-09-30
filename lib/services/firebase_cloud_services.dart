@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_chat/controller/auth_controller.dart';
 import 'package:flutter_chat/modal/chat_model.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';

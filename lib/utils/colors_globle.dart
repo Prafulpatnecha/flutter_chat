@@ -18,3 +18,20 @@ Color sheetColor = Colors.orange.shade100.withOpacity(0.2);
 Color textStyleColor = Colors.grey.shade200;
 Color textFieldContainer = Colors.purple.shade50.withOpacity(0.3);
 Color appBarColor = Colors.white.withOpacity(0.2);
+Color sentMassageCountColor = Colors.blue.withOpacity(0.2);
+Color sentTextMassageCountColor = Colors.black;
+
+List colorsDotted = [
+  Colors.blue,
+  Colors.red,
+  Colors.orange,
+  Colors.amber,
+  Colors.purple,
+  Colors.grey,
+  Colors.cyanAccent,
+  Colors.yellow,
+  Colors.deepPurple,
+  Colors.brown,
+  Colors.tealAccent,
+  Colors.greenAccent,
+];

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../utils/colors_globle.dart';
 import 'components/chat_components.dart';
 
