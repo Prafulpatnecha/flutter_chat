@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/services/cloud_storage_firebase_save_any_files.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 import '../../../modal/chat_model.dart';
 import '../../../modal/massageTypeModel.dart';
 import '../../../services/auth_services.dart';
@@ -39,7 +40,7 @@ StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>
         return Container(
           height: 100,
           width: width,
-          color: appBarColor,
+          color: colorsGlobleGet.appBarColor.value,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8.0,
@@ -67,7 +68,7 @@ StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>
                           chatController.receiverName.value.capitalize
                               .toString(),
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: textColor),
+                              fontWeight: FontWeight.bold, color: colorsGlobleGet.textColor.value),
                         ),
                         if (chatUser!["typingChat"] == true)
                           const Text(
@@ -95,7 +96,7 @@ StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>
                       spread: 5,
                       borderRadius: 50,
                       curveType: CurveType.concave,
-                      color: containerColor,
+                      color: colorsGlobleGet.containerColor.value,
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -195,7 +196,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
             builder: (context) {
               return Container(
                 decoration: BoxDecoration(
-                    color: sheetColor,
+                    color: colorsGlobleGet.sheetColor.value,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),
@@ -214,21 +215,21 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                   TextEditingController(
                                       text: chatList[index].message);
                               return AlertDialog(
-                                backgroundColor: sheetColor,
+                                backgroundColor: colorsGlobleGet.sheetColor.value,
                                 title: Center(
                                     child: Text(
                                   "Edit Message",
                                   style: TextStyle(
-                                    color: textChanderColor,
+                                    color: colorsGlobleGet.textChanderColor.value,
                                   ),
                                 )),
                                 content: Container(
                                   decoration: BoxDecoration(
-                                      color: textFieldContainer,
+                                      color: colorsGlobleGet.textFieldContainer.value,
                                       borderRadius: BorderRadius.circular(50)),
                                   child: TextField(
                                     controller: textUpdate,
-                                    style: TextStyle(color: textStyleColor),
+                                    style: TextStyle(color: colorsGlobleGet.textStyleColor.value),
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderSide: const BorderSide(
@@ -256,7 +257,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                       child: Text(
                                         "Exit",
                                         style:
-                                            TextStyle(color: textChanderColor),
+                                            TextStyle(color: colorsGlobleGet.textChanderColor.value),
                                       )),
                                   TextButton(
                                     onPressed: () async {
@@ -273,7 +274,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                     },
                                     child: Text(
                                       "Confirm",
-                                      style: TextStyle(color: textChanderColor),
+                                      style: TextStyle(color: colorsGlobleGet.textChanderColor.value),
                                     ),
                                   ),
                                 ],
@@ -290,7 +291,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                           child: Text(
                             "Edit Message",
                             style: TextStyle(
-                              color: textChanderColor,
+                              color: colorsGlobleGet.textChanderColor.value,
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             ),
@@ -306,8 +307,8 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                         lineLength: double.infinity,
                         lineThickness: 2,
                         dashLength: 2.0,
-                        dashColor: textColor,
-                        dashGradient: dividerColorList,
+                        dashColor: colorsGlobleGet.textColor.value,
+                        dashGradient: colorsGlobleGet.dividerColorList,
                         dashRadius: 0.0,
                         dashGapRadius: 20,
                       ),
@@ -320,10 +321,10 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              backgroundColor: sheetColor,
+                              backgroundColor: colorsGlobleGet.sheetColor.value,
                               content: Text(
                                 "Delete Message?",
-                                style: TextStyle(color: textSheetDeleteColor),
+                                style: TextStyle(color: colorsGlobleGet.textSheetDeleteColor.value),
                               ),
                               actions: [
                                 Column(
@@ -349,7 +350,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                           child: Text("Delete For Everyone",
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
-                                                  color: textButtonColor,
+                                                  color: colorsGlobleGet.textButtonColor.value,
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                       ],
@@ -374,7 +375,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                             "Delete For Me",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
-                                                color: textButtonColor,
+                                                color: colorsGlobleGet.textButtonColor.value,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -392,7 +393,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                             "close",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
-                                              color: textButtonColor,
+                                              color: colorsGlobleGet.textButtonColor.value,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -417,7 +418,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                             child: Text(
                               "Delete",
                               style: TextStyle(
-                                  color: textChanderColor,
+                                  color: colorsGlobleGet.textChanderColor.value,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20),
                             ),
@@ -438,7 +439,7 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
               width:
                   (chatList[index].message!.length <= 34) ? null : width * 0.8,
               decoration: BoxDecoration(
-                color: chatReadColorCurrentUser,
+                color: colorsGlobleGet.chatReadColorCurrentUser.value,
                 borderRadius: const BorderRadius.only(
                     bottomRight: Radius.circular(10),
                     bottomLeft: Radius.circular(10),
@@ -450,12 +451,10 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    (chatList[index].massageType == MassageType.massage)
-                        ? Text(
+                    if (chatList[index].massageType == MassageType.massage) Text(
                             "${chatList[index].message!}    ",
-                            style: TextStyle(fontSize: 17, color: textColor),
-                          )
-                        : GestureDetector(
+                            style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
+                          ) else if(chatList[index].massageType == MassageType.image) GestureDetector(
                             onTap: () {
                               chatController.imageShow.value =
                                   chatList[index].message!;
@@ -468,6 +467,19 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                 height: 300,
                                 fit: BoxFit.cover,
                               ),
+                            ))else GestureDetector(
+                            onTap: () {
+                              chatController.imageShow.value =
+                                  chatList[index].message!;
+                              // Get.toNamed("/imageShow");
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              child: VideoPlayer( VideoPlayerController.networkUrl(
+                                Uri.parse(
+                                  chatList[index].message!,
+                                ),
+                              )),
                             )),
                     //todo sender read.............................................................................
                     if (chatList[index].readAndUnReadMassage == false)
@@ -513,7 +525,7 @@ Row deleteSanderChatsRow(BuildContext context, List<dynamic> docIdList,
             builder: (context) {
               return Container(
                 decoration: BoxDecoration(
-                    color: sheetColor,
+                    color: colorsGlobleGet.sheetColor.value,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),
@@ -569,7 +581,7 @@ Row deleteSanderChatsRow(BuildContext context, List<dynamic> docIdList,
                             child: Text(
                               "Delete",
                               style: TextStyle(
-                                  color: textChanderColor,
+                                  color: colorsGlobleGet.textChanderColor.value,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20),
                             ),
@@ -587,7 +599,7 @@ Row deleteSanderChatsRow(BuildContext context, List<dynamic> docIdList,
           margin: const EdgeInsets.all(5),
           width: (chatList[index].message!.length <= 34) ? null : width * 0.8,
           decoration: BoxDecoration(
-            color: chatReadColorCurrentUser,
+            color: colorsGlobleGet.chatReadColorCurrentUser.value,
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
@@ -597,7 +609,7 @@ Row deleteSanderChatsRow(BuildContext context, List<dynamic> docIdList,
             padding: const EdgeInsets.all(10.0),
             child: Text(
               "You deleted this message",
-              style: TextStyle(fontSize: 17, color: textColor),
+              style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
             ),
           ),
         ),
@@ -628,7 +640,7 @@ Row receiverChatsRow(BuildContext context, List<dynamic> docIdList, int index,
             builder: (context) {
               return Container(
                 decoration: BoxDecoration(
-                    color: sheetColor,
+                    color: colorsGlobleGet.sheetColor.value,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),
@@ -684,7 +696,7 @@ Row receiverChatsRow(BuildContext context, List<dynamic> docIdList, int index,
                             child: Text(
                               "Delete",
                               style: TextStyle(
-                                  color: textChanderColor,
+                                  color: colorsGlobleGet.textChanderColor.value,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20),
                             ),
@@ -702,7 +714,7 @@ Row receiverChatsRow(BuildContext context, List<dynamic> docIdList, int index,
           margin: const EdgeInsets.all(5),
           width: (chatList[index].message!.length <= 34) ? null : width * 0.8,
           decoration: BoxDecoration(
-            color: chatReadColor,
+            color: colorsGlobleGet.chatReadColor.value,
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
@@ -713,7 +725,7 @@ Row receiverChatsRow(BuildContext context, List<dynamic> docIdList, int index,
             child: (chatList[index].massageType == MassageType.massage)
                 ? Text(
                     chatList[index].message!,
-                    style: TextStyle(fontSize: 17, color: textColor),
+                    style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
                   )
                 : GestureDetector(
                     onTap: () {
@@ -757,7 +769,7 @@ Row deleteChatMassageReceiverChatsRow(
             builder: (context) {
               return Container(
                 decoration: BoxDecoration(
-                    color: sheetColor,
+                    color: colorsGlobleGet.sheetColor.value,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30))),
@@ -813,7 +825,7 @@ Row deleteChatMassageReceiverChatsRow(
                             child: Text(
                               "Delete",
                               style: TextStyle(
-                                  color: textChanderColor,
+                                  color: colorsGlobleGet.textChanderColor.value,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20),
                             ),
@@ -831,7 +843,7 @@ Row deleteChatMassageReceiverChatsRow(
           margin: const EdgeInsets.all(5),
           width: (chatList[index].message!.length <= 34) ? null : width * 0.8,
           decoration: BoxDecoration(
-            color: chatReadColor,
+            color: colorsGlobleGet.chatReadColor.value,
             borderRadius: const BorderRadius.only(
                 bottomRight: Radius.circular(10),
                 bottomLeft: Radius.circular(10),
@@ -841,7 +853,7 @@ Row deleteChatMassageReceiverChatsRow(
             padding: const EdgeInsets.all(10.0),
             child: Text(
               "You deleted this message",
-              style: TextStyle(fontSize: 17, color: textColor),
+              style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
             ),
           ),
         ),
@@ -884,7 +896,7 @@ Padding chatSanderPadding() {
         // },
         // focusNode: FocusNode(canRequestFocus: true),
         controller: chatController.txtMassage,
-        cursorColor: cursorTextColor,
+        cursorColor: colorsGlobleGet.cursorTextColor.value,
         decoration: InputDecoration(
           prefixIcon: IconButton(
               onPressed: () {},
@@ -904,6 +916,35 @@ Padding chatSanderPadding() {
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              IconButton(
+                  onPressed: () async {
+                    ImagePicker imagePicker = ImagePicker();
+                    XFile? xFileVideo = await imagePicker.pickVideo(
+                        source: ImageSource.gallery);
+                    try{
+                      File image = File(xFileVideo!.path);
+                    ChatModel chat = ChatModel(
+                        massageType: MassageType.video,
+                        readAndUnReadMassage: false,
+                        sender:
+                            AuthServices.authServices.getCurrentUser()!.email,
+                        receiver: chatController.receiverEmail.value,
+                        message: await CloudStorageFirebaseSaveAnyFiles
+                            .cloudStorageFirebaseSaveAnyFiles
+                            .videoStorageIntoChatSander(image),
+                        editTime: Timestamp.now(),
+                        edit: false,
+                        delete: false,
+                        deleteSender: false,
+                        time: Timestamp.now(),
+                        deleteReceiver: false);
+                    await FirebaseCloudServices.firebaseCloudServices
+                        .addChatFireStore(chat);
+                    }catch(e){
+                      Get.snackbar("Video", "Video Dispatch!!!");
+                    }
+                  },
+                  icon: Icon(Icons.video_collection_outlined)),
               IconButton(
                   onPressed: () async {
                     ImagePicker imagePicker = ImagePicker();

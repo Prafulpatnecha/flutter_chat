@@ -119,7 +119,7 @@ Align signInAlign(double height, double width, AuthController authController) {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text.rich(TextSpan(children: [
-                  TextSpan(text: "Don't have an account?",style: TextStyle(color: textColor,fontSize: 10)),
+                  TextSpan(text: "Don't have an account?",style: TextStyle(color: colorsGlobleGet.textColor.value,fontSize: 10)),
                   TextSpan(text: " Sign Up",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold))
                 ],),),
               ),

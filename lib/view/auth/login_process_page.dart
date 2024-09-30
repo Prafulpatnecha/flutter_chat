@@ -21,15 +21,17 @@ class LoginProcessPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     AuthController authController = Get.put(AuthController());
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Obx(
         () => Container(
           height: height,
           width: width,
           // depth: 30,
           // curveType: CurveType.convex,
-          color: containerColor,
+          color: colorsGlobleGet.containerColor.value,
           child: Stack(
             children: [
+
               Align(
                 alignment: Alignment.topCenter,
                 child: ClipPath(
@@ -37,7 +39,7 @@ class LoginProcessPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height*0.31,
-                    color: chatColorList[0],
+                    color: colorsGlobleGet.chatColorList[0],
                   ),
                 ),
               ),
@@ -48,7 +50,7 @@ class LoginProcessPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height*0.3,
-                    color: chatColorList[3],
+                    color: colorsGlobleGet.chatColorList[3],
                   ),
                 ),
               ),
@@ -76,7 +78,7 @@ class LoginProcessPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height*0.22,
-                    color: chatColorList[1],
+                    color: colorsGlobleGet.chatColorList[1],
                   ),
                 ),
               ),
@@ -87,7 +89,7 @@ class LoginProcessPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height*0.2,
-                    color: chatColorList[0],
+                    color: colorsGlobleGet.chatColorList[0],
                   ),
                 ),
               ),
@@ -98,7 +100,7 @@ class LoginProcessPage extends StatelessWidget {
                   child: Container(
                     width: width,
                     height: height*0.18,
-                    color: chatColorList[2],
+                    color: colorsGlobleGet.chatColorList[2],
                   ),
                 ),
               ),

@@ -27,8 +27,7 @@ class FirebaseCloudServices {
   }
 
   //todo read Current user data
-  Future<DocumentSnapshot<Map<String, dynamic>>>
-      readCurrentUserIntoFireStore() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> readCurrentUserIntoFireStore() async {
     User? user = AuthServices.authServices.getCurrentUser();
     return await firebaseFireStore.collection('users').doc(user!.email).get();
   }

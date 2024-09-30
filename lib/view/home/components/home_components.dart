@@ -61,12 +61,12 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
                   // height: 90,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                  color: sentMassageCountColor,
+                  color: colorsGlobleGet.sentMassageCountColor.value,
                     shape: BoxShape.circle
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text(value.toString(),style: TextStyle(color: sentTextMassageCountColor),),
+                    child: Text(value.toString(),style: TextStyle(color: colorsGlobleGet.sentTextMassageCountColor.value),),
                   ),):Container();
               }
             ),
@@ -79,7 +79,7 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
           spread: 5,
           borderRadius: 50,
           curveType: CurveType.concave,
-          color: containerColor,
+          color: colorsGlobleGet.containerColor.value,
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -103,7 +103,7 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
           // lineThickness: 0.8,
           dashLength: 3.05,
           // dashColor: Colors.black,
-          dashGradient: [colorsDotted[random.nextInt(colorsDotted.length)], colorsDotted[random.nextInt(colorsDotted.length)]],
+          dashGradient: [colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)], colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)]],
           dashRadius: 5.0,
           dashGapLength: 3.0,
           dashGapColor: Colors.transparent,
@@ -117,10 +117,10 @@ Column emailAndAllUserAccess(List<UserModal> userModal, int index) {
           alignment: WrapAlignment.center,
           lineThickness: 0.8,
           dashLength: 0.05,
-          dashGradient: [colorsDotted[random.nextInt(colorsDotted.length)], colorsDotted[random.nextInt(colorsDotted.length)]],
+          dashGradient: [colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)], colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)]],
           dashRadius: 5.0,
           dashGapColor: Colors.transparent,
-          dashGapGradient: [colorsDotted[random.nextInt(colorsDotted.length)], colorsDotted[random.nextInt(colorsDotted.length)]],
+          dashGapGradient: [colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)], colorsGlobleGet.colorsDotted[random.nextInt(colorsGlobleGet.colorsDotted.length)]],
           dashGapRadius: 0.0,
         ),
       ),

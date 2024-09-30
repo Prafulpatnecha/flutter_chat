@@ -27,6 +27,15 @@ class CloudStorageFirebaseSaveAnyFiles {
     String fileSaveImageUrl = await _firebaseStorage.ref(filePath).getDownloadURL();
     return fileSaveImageUrl;
   }
+
+  //Todo Sander And Receiver image Well be sharing
+  Future<String> videoStorageIntoChatSander(File fileImage)
+  async {
+    final filePath = "video/${fileImage.path}.mp4";
+    await _firebaseStorage.ref(filePath).putFile(fileImage);
+    String fileSaveImageUrl = await _firebaseStorage.ref(filePath).getDownloadURL();
+    return fileSaveImageUrl;
+  }
 }
 // print("object 1");
 // final imageSave = await getApplicationDocumentsDirectory();

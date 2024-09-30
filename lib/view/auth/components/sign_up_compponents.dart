@@ -143,7 +143,7 @@ Align signUpAlign(double height, double width, AuthController authController) {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text.rich(TextSpan(children: [
-                  TextSpan(text: "Already have an account?",style: TextStyle(color: textColor,fontSize: 10)),
+                  TextSpan(text: "Already have an account?",style: TextStyle(color: colorsGlobleGet.textColor.value,fontSize: 10)),
                   TextSpan(text: " Login",style: TextStyle(color: Colors.blue,fontWeight: FontWeight.bold))
                 ],),),
               ),

@@ -121,14 +121,13 @@ class _HomePageState extends State<HomePage>{
       body: Container(
         height: height,
         width: width,
-        color: containerColor,
+        color: colorsGlobleGet.containerColor.value,
         child: Tilt(
           child: Container(
             height: height,
             width: width,
             child: FutureBuilder(
-              future: FirebaseCloudServices.firebaseCloudServices
-                  .readAllUserFromFireStore(),
+              future: FirebaseCloudServices.firebaseCloudServices.readAllUserFromFireStore(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Center(
@@ -214,16 +213,11 @@ class _HomePageState extends State<HomePage>{
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
                           children: [
-                            Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
+                            Text("Massages",style: TextStyle(fontSize: 20,color: colorsGlobleGet.textColor.value,fontWeight: FontWeight.bold),),
                             // Text("Massages",style: TextStyle(fontSize: 20,color: textColor,fontWeight: FontWeight.bold),),
                             const Spacer(),
                             IconButton(onPressed: () async {
-                              await AuthServices.authServices.signOutEmail();
-                              Get.offAndToNamed("/login");
-                              //Todo this is blank and not working... but then using next time...
-                            }, icon: const Icon(Icons.logout_outlined)),//search
-                            IconButton(onPressed: () async {
-                              Get.offAndToNamed("/profile");
+                              Get.toNamed("/profile");
                             }, icon: const Icon(Icons.person))
                           ],
                         ),

@@ -20,7 +20,7 @@ class ChatPage extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: chatColorList,
+              colors: colorsGlobleGet.chatColorList,
               end: Alignment.bottomCenter,
               begin: Alignment.topCenter),
         ),
