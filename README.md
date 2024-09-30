@@ -52,7 +52,7 @@ https://github.com/user-attachments/assets/168828d6-e6e0-41ed-b97f-2dece5283028
 https://github.com/user-attachments/assets/87d7e6eb-9f7a-4080-818c-fa1a03493a5d
 
 
-
+description  
 
 Chat is a fast, secure, and user-friendly messaging app designed to keep you connected with friends, family, and colleagues. Whether you want to chat one-on-one or in groups, QuickChat makes it simple and fun.
 
