@@ -9,7 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/services/cloud_storage_firebase_save_any_files.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:video_player/video_player.dart';
+import 'package:media_collection_previewer/enums.dart';
+import 'package:media_collection_previewer/media_collection.dart';
+import 'package:media_collection_previewer/models/media.dart';
+import 'package:media_collection_previewer/models/theme.dart';
 import '../../../modal/chat_model.dart';
 import '../../../modal/massageTypeModel.dart';
 import '../../../services/auth_services.dart';
@@ -68,7 +71,8 @@ StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>
                           chatController.receiverName.value.capitalize
                               .toString(),
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: colorsGlobleGet.textColor.value),
+                              fontWeight: FontWeight.bold,
+                              color: colorsGlobleGet.textColor.value),
                         ),
                         if (chatUser!["typingChat"] == true)
                           const Text(
@@ -215,21 +219,26 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                   TextEditingController(
                                       text: chatList[index].message);
                               return AlertDialog(
-                                backgroundColor: colorsGlobleGet.sheetColor.value,
+                                backgroundColor:
+                                    colorsGlobleGet.sheetColor.value,
                                 title: Center(
                                     child: Text(
                                   "Edit Message",
                                   style: TextStyle(
-                                    color: colorsGlobleGet.textChanderColor.value,
+                                    color:
+                                        colorsGlobleGet.textChanderColor.value,
                                   ),
                                 )),
                                 content: Container(
                                   decoration: BoxDecoration(
-                                      color: colorsGlobleGet.textFieldContainer.value,
+                                      color: colorsGlobleGet
+                                          .textFieldContainer.value,
                                       borderRadius: BorderRadius.circular(50)),
                                   child: TextField(
                                     controller: textUpdate,
-                                    style: TextStyle(color: colorsGlobleGet.textStyleColor.value),
+                                    style: TextStyle(
+                                        color: colorsGlobleGet
+                                            .textStyleColor.value),
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
                                           borderSide: const BorderSide(
@@ -256,8 +265,9 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                       },
                                       child: Text(
                                         "Exit",
-                                        style:
-                                            TextStyle(color: colorsGlobleGet.textChanderColor.value),
+                                        style: TextStyle(
+                                            color: colorsGlobleGet
+                                                .textChanderColor.value),
                                       )),
                                   TextButton(
                                     onPressed: () async {
@@ -274,7 +284,9 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                     },
                                     child: Text(
                                       "Confirm",
-                                      style: TextStyle(color: colorsGlobleGet.textChanderColor.value),
+                                      style: TextStyle(
+                                          color: colorsGlobleGet
+                                              .textChanderColor.value),
                                     ),
                                   ),
                                 ],
@@ -324,7 +336,9 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                               backgroundColor: colorsGlobleGet.sheetColor.value,
                               content: Text(
                                 "Delete Message?",
-                                style: TextStyle(color: colorsGlobleGet.textSheetDeleteColor.value),
+                                style: TextStyle(
+                                    color: colorsGlobleGet
+                                        .textSheetDeleteColor.value),
                               ),
                               actions: [
                                 Column(
@@ -350,7 +364,8 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                           child: Text("Delete For Everyone",
                                               textAlign: TextAlign.end,
                                               style: TextStyle(
-                                                  color: colorsGlobleGet.textButtonColor.value,
+                                                  color: colorsGlobleGet
+                                                      .textButtonColor.value,
                                                   fontWeight: FontWeight.bold)),
                                         ),
                                       ],
@@ -375,7 +390,8 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                             "Delete For Me",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
-                                                color: colorsGlobleGet.textButtonColor.value,
+                                                color: colorsGlobleGet
+                                                    .textButtonColor.value,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
@@ -393,7 +409,8 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                                             "close",
                                             textAlign: TextAlign.end,
                                             style: TextStyle(
-                                              color: colorsGlobleGet.textButtonColor.value,
+                                              color: colorsGlobleGet
+                                                  .textButtonColor.value,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -451,36 +468,68 @@ Row senderChatsRow(BuildContext context, List<ChatModel> chatList, int index,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (chatList[index].massageType == MassageType.massage) Text(
-                            "${chatList[index].message!}    ",
-                            style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
-                          ) else if(chatList[index].massageType == MassageType.image) GestureDetector(
-                            onTap: () {
-                              chatController.imageShow.value =
-                                  chatList[index].message!;
-                              Get.toNamed("/imageShow");
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              child: Image.network(
-                                chatList[index].message!,
-                                height: 300,
-                                fit: BoxFit.cover,
+                    if (chatList[index].massageType == MassageType.massage)
+                      Text(
+                        "${chatList[index].message!}    ",
+                        style: TextStyle(
+                            fontSize: 17,
+                            color: colorsGlobleGet.textColor.value),
+                      )
+                    // else if (chatList[index].massageType == MassageType.image)
+                    //   GestureDetector(
+                    //       onTap: () {
+                    //         chatController.imageShow.value =
+                    //             chatList[index].message!;
+                    //         Get.toNamed("/imageShow");
+                    //       },
+                    //       child: Container(
+                    //         width: double.infinity,
+                    //         child: Image.network(
+                    //           chatList[index].message!,
+                    //           height: 300,
+                    //           fit: BoxFit.cover,
+                    //         ),
+                    //       ))
+                    else
+                      GestureDetector(
+                          onTap: () {
+                            chatController.imageShow.value =
+                                chatList[index].message!;
+                            // Get.toNamed("/imageShow");
+                          },
+                          child: Container(
+                            width: 500,
+                            // height: 800,
+                            child: MediaCollection(
+                              medias: [
+                                if(chatList[index].massageType == MassageType.image)
+                                Media(
+                                    id: index,
+                                    type: MediaType.image,
+                                    url: chatList[index].message)
+                                  else
+                                Media(
+                                    id: index,
+                                    type: MediaType.video,
+                                    url: chatList[index].message)
+                              ],
+                              theme: const MediaCollectionTheme(
+                                arrowColor: Colors.white,
+                                arrowBgColor: Colors.black,
+                                playIconBgColor: Colors.black,
+                                playIconBgSize: 50,
+                                playIconSize: 30,
+                                audioIconBgColor: Colors.black,
+                                audioIconBgSize: 50,
+                                audioIconColor: Colors.white,
+                                audioIconSize: 30,
+                                audioPlayerBgColor: Colors.black,
+                                dividerWidth: 2.5,
+                                mainItemHeight: 300,
+                                subItemHeight: 198.25,
                               ),
-                            ))else GestureDetector(
-                            onTap: () {
-                              chatController.imageShow.value =
-                                  chatList[index].message!;
-                              // Get.toNamed("/imageShow");
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              child: VideoPlayer( VideoPlayerController.networkUrl(
-                                Uri.parse(
-                                  chatList[index].message!,
-                                ),
-                              )),
-                            )),
+                            ),
+                          )),
                     //todo sender read.............................................................................
                     if (chatList[index].readAndUnReadMassage == false)
                       const Icon(
@@ -609,7 +658,8 @@ Row deleteSanderChatsRow(BuildContext context, List<dynamic> docIdList,
             padding: const EdgeInsets.all(10.0),
             child: Text(
               "You deleted this message",
-              style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
+              style: TextStyle(
+                  fontSize: 17, color: colorsGlobleGet.textColor.value),
             ),
           ),
         ),
@@ -722,21 +772,68 @@ Row receiverChatsRow(BuildContext context, List<dynamic> docIdList, int index,
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child: (chatList[index].massageType == MassageType.massage)
-                ? Text(
+            child: Column(
+              children: [
+                if (chatList[index].massageType == MassageType.massage)
+                  Text(
                     chatList[index].message!,
-                    style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
+                    style: TextStyle(
+                        fontSize: 17, color: colorsGlobleGet.textColor.value),
                   )
-                : GestureDetector(
+                // else if (chatList[index].massageType == MassageType.image)
+                //   GestureDetector(
+                //     onTap: () {
+                //       chatController.imageShow.value = chatList[index].message!;
+                //       Get.toNamed("/imageShow");
+                //     },
+                //     child: Image.network(
+                //       chatList[index].message!,
+                //       height: 300,
+                //       fit: BoxFit.cover,
+                //     ),
+                //   )
+                else
+                  GestureDetector(
                     onTap: () {
                       chatController.imageShow.value = chatList[index].message!;
-                      Get.toNamed("/imageShow");
+                      // Get.toNamed("/imageShow");
                     },
-                    child: Image.network(
-                      chatList[index].message!,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    )),
+                    child: Container(
+                      width: 500,
+                      // height: 800,
+                      child: MediaCollection(
+                        medias: [
+                          if(chatList[index].massageType == MassageType.image)
+                          Media(
+                              id: index,
+                              type: MediaType.image,
+                              url: chatList[index].message)
+                          else
+                            Media(
+                                id: index,
+                                type: MediaType.video,
+                                url: chatList[index].message)
+                        ],
+                        theme: const MediaCollectionTheme(
+                          arrowColor: Colors.white,
+                          arrowBgColor: Colors.black,
+                          playIconBgColor: Colors.black,
+                          playIconBgSize: 50,
+                          playIconSize: 30,
+                          audioIconBgColor: Colors.black,
+                          audioIconBgSize: 50,
+                          audioIconColor: Colors.white,
+                          audioIconSize: 30,
+                          audioPlayerBgColor: Colors.black,
+                          dividerWidth: 2.5,
+                          mainItemHeight: 300,
+                          subItemHeight: 198.25,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -853,7 +950,8 @@ Row deleteChatMassageReceiverChatsRow(
             padding: const EdgeInsets.all(10.0),
             child: Text(
               "You deleted this message",
-              style: TextStyle(fontSize: 17, color: colorsGlobleGet.textColor.value),
+              style: TextStyle(
+                  fontSize: 17, color: colorsGlobleGet.textColor.value),
             ),
           ),
         ),
@@ -921,26 +1019,26 @@ Padding chatSanderPadding() {
                     ImagePicker imagePicker = ImagePicker();
                     XFile? xFileVideo = await imagePicker.pickVideo(
                         source: ImageSource.gallery);
-                    try{
+                    try {
                       File image = File(xFileVideo!.path);
-                    ChatModel chat = ChatModel(
-                        massageType: MassageType.video,
-                        readAndUnReadMassage: false,
-                        sender:
-                            AuthServices.authServices.getCurrentUser()!.email,
-                        receiver: chatController.receiverEmail.value,
-                        message: await CloudStorageFirebaseSaveAnyFiles
-                            .cloudStorageFirebaseSaveAnyFiles
-                            .videoStorageIntoChatSander(image),
-                        editTime: Timestamp.now(),
-                        edit: false,
-                        delete: false,
-                        deleteSender: false,
-                        time: Timestamp.now(),
-                        deleteReceiver: false);
-                    await FirebaseCloudServices.firebaseCloudServices
-                        .addChatFireStore(chat);
-                    }catch(e){
+                      ChatModel chat = ChatModel(
+                          massageType: MassageType.video,
+                          readAndUnReadMassage: false,
+                          sender:
+                              AuthServices.authServices.getCurrentUser()!.email,
+                          receiver: chatController.receiverEmail.value,
+                          message: await CloudStorageFirebaseSaveAnyFiles
+                              .cloudStorageFirebaseSaveAnyFiles
+                              .videoStorageIntoChatSander(image),
+                          editTime: Timestamp.now(),
+                          edit: false,
+                          delete: false,
+                          deleteSender: false,
+                          time: Timestamp.now(),
+                          deleteReceiver: false);
+                      await FirebaseCloudServices.firebaseCloudServices
+                          .addChatFireStore(chat);
+                    } catch (e) {
                       Get.snackbar("Video", "Video Dispatch!!!");
                     }
                   },
@@ -950,7 +1048,8 @@ Padding chatSanderPadding() {
                     ImagePicker imagePicker = ImagePicker();
                     XFile? xFileImage = await imagePicker.pickImage(
                         source: ImageSource.gallery);
-                    File image = File(xFileImage!.path);
+                    try{
+                      File image = File(xFileImage!.path);
                     ChatModel chat = ChatModel(
                         massageType: MassageType.image,
                         readAndUnReadMassage: false,
@@ -968,6 +1067,10 @@ Padding chatSanderPadding() {
                         deleteReceiver: false);
                     await FirebaseCloudServices.firebaseCloudServices
                         .addChatFireStore(chat);
+                    }
+                    catch(e){
+                      Get.snackbar("Image", "Image Dispatch!!!");
+                    }
                   },
                   icon: Icon(Icons.image_outlined)),
               IconButton(

@@ -126,7 +126,7 @@ class ProfilePage extends StatelessWidget {
                                                 color: colorsGlobleGet.textColor.value,
                                               ),
                                             )
-                                          : const Text(""),
+                                          : const Text("NA"),
                                   // subtitle: Text(userModal.email)
                                   // (userModal.phoneNo!='')?Text("+91-${userModal.phoneNo}",style: TextStyle(color: textColor,),):const Text(""),
                                 )

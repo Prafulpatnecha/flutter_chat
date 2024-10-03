@@ -5,8 +5,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat/services/firebase_cloud_services.dart';
 import 'package:get/get.dart';
-
+GetOnlineController getOnlineController = Get.put(GetOnlineController());
 class GetOnlineController extends GetxController{
+  RxBool splashScreenBool = true.obs;
   @override
   void onInit() {
     // TODO: implement onInit
