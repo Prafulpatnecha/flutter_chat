@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController
 {
@@ -28,6 +27,7 @@ class AuthController extends GetxController
   TextEditingController textPhoneNo = TextEditingController();
   TextEditingController textConfirmPassword = TextEditingController();
   Rx<File>? imagePath;
+  RxString imageString=''.obs;
   void updateObs()
   {
     update();

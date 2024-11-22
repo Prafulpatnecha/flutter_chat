@@ -8,7 +8,7 @@ class GoogleAuthServices {
   GoogleAuthServices._();
 
   static GoogleAuthServices googleAuthServices = GoogleAuthServices._();
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<void> googleLoginWithGmail() async {
     try {

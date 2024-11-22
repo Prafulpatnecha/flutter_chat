@@ -2,10 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/view/command/my_app.dart';
 // import 'package:flutter_chat/view/command/my_app.dart';
+import 'controller/online_controller.dart';
 import 'firebase_options.dart';
 // https://console.firebase.google.com/project/flutterchat-e5565/overview
-import 'package:clay_containers/clay_containers.dart';
-import 'package:get/get.dart';
 Future<void> main()
 async {
   WidgetsFlutterBinding.ensureInitialized();

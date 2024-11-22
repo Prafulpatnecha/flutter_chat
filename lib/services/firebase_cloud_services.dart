@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat/modal/chat_model.dart';
 import 'package:flutter_chat/modal/user_modal.dart';
 import 'package:flutter_chat/services/auth_services.dart';
+import 'package:flutter_chat/utils/globle_variable.dart';
 
 class FirebaseCloudServices {
   FirebaseCloudServices._();
@@ -19,12 +20,14 @@ class FirebaseCloudServices {
       "image": userModal.image,
       "name": userModal.name,
       "token": userModal.token,
+      "online": userModal.online,
+      "lastTime": userModal.lastTime,
+      "typingChat": userModal.typingChat,
     });
   }
 
   //todo read Current user data
-  Future<DocumentSnapshot<Map<String, dynamic>>>
-      readCurrentUserIntoFireStore() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> readCurrentUserIntoFireStore() async {
     User? user = AuthServices.authServices.getCurrentUser();
     return await firebaseFireStore.collection('users').doc(user!.email).get();
   }
@@ -32,27 +35,151 @@ class FirebaseCloudServices {
   //todo read all user data
   Future<QuerySnapshot<Map<String, dynamic>>> readAllUserFromFireStore() async {
     User? user = AuthServices.authServices.getCurrentUser();
-    return await firebaseFireStore.collection("users").where("email",isNotEqualTo: user!.email).get();
+    return await firebaseFireStore
+        .collection("users")
+        .where("email", isNotEqualTo: user!.email)
+        .get();
   }
 
   //todo chat in fire store
-  Future<void> addChatFireStore(ChatModel chat)
-  async {
+  Future<void> addChatFireStore(ChatModel chat) async {
     String? sender = chat.sender;
     String? receiver = chat.receiver;
     List doc = [sender, receiver];
     doc.sort();
     String docId = doc.join("_");
-    await firebaseFireStore.collection("chatroom").doc(docId).collection("chat").add(chat.toMap(chat));
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .add(chat.toMap(chat));
   }
 
 // todo chat read and and receiver
-  Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore(String receiver)
-  {
+  Stream<QuerySnapshot<Map<String, dynamic>>> readChatFromFireStore(
+      String receiver) {
     String sender = AuthServices.authServices.getCurrentUser()!.email!;
-    List doc = [sender,receiver];
+    List doc = [sender, receiver];
     doc.sort();
     String docId = doc.join("_");
-    return firebaseFireStore.collection("chatroom").doc(docId).collection("chat").snapshots();
+    return firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .orderBy("time", descending: true)
+        .snapshots();
+  }
+
+  //Todo UPDATE
+  Future<void> updateChat(String receiver, String massage, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      "message": massage,
+      "edit": true,
+      "editTime": Timestamp.now(),
+    });
+  }
+
+  //Todo DELETE ME
+  Future<void> deleteChatSenderMe(
+      String receiver, bool delete, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      "editTime": Timestamp.now(),
+      // "delete" : true,//delete all
+      "deleteSender": true,
+    });
+  }
+
+  //Todo DELETE Also
+  Future<void> deleteChatSenderAlso(
+      String receiver, bool delete, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      "editTime": Timestamp.now(),
+      "delete": true, //delete all
+    });
+  }
+
+  //Todo DELETE Receiver
+  Future<void> deleteChatReceiver(String receiver, bool delete, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      "editTime": Timestamp.now(),
+      "deleteReceiver": delete, //delete Receiver
+    });
+  }
+
+  //todo online Status
+  Future<void> changeOnline(
+      Timestamp lastTime, bool status, bool typingChat) async {
+    String email = AuthServices.authServices.getCurrentUser()!.email!;
+    await firebaseFireStore.collection("users").doc(email).update({
+      "lastTime": lastTime,
+      "online": status,
+      "typingChat": typingChat,
+    });
+  }
+
+  //todo find User Online Yes And No
+  Stream<DocumentSnapshot<Map<String, dynamic>>>
+      findUserOnlineOfflineAndLastTime() {
+    String email = chatController.receiverEmail.value;
+    return firebaseFireStore.collection("users").doc(email).snapshots();
+  }
+
+  //todo user msg read and unread massage
+  Future<void> userReadAndUnRead(
+      String receiver, bool readAndUnReadMassage, String dcId) async {
+    // ChatModel chat ;//update
+    String sender = AuthServices.authServices.getCurrentUser()!.email!;
+    List doc = [sender, receiver];
+    doc.sort();
+    String docId = doc.join("_");
+    await firebaseFireStore
+        .collection("chatroom")
+        .doc(docId)
+        .collection("chat")
+        .doc(dcId)
+        .update({
+      'readAndUnReadMassage': readAndUnReadMassage,
+    });
   }
 }
