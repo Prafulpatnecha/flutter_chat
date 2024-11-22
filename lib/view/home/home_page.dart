@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
@@ -77,12 +76,12 @@ class HomePage extends StatelessWidget {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: //(userModal[index].image.contains('file:'))?
-                                          // FileImage(File(userModal[index].image))
-                                              NetworkImage(userModal[2].image)
-                                        //todo image set work is not complete <--------------------------------------------------
-                                      ),
+                                      // image: DecorationImage(
+                                      //     image: //(userModal[index].image.contains('file:'))?
+                                      //     // FileImage(File(userModal[index].image))
+                                      //         NetworkImage(userModal[2].image)
+                                      //   //todo image set work is not complete <--------------------------------------------------
+                                      // ),
                                     ),
                                   ),
                                 ),
